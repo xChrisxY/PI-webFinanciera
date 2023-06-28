@@ -2,13 +2,13 @@ import { useState, useEffect } from "react"
 import { formatearDinero, calcularTotalPagar } from "../helpers";
 import Button from "./Button";
 
-function Cotizador({ setPlan , setMonto, disabled}) {
+function Cotizador({ setPlan , setTotalCredito, pagos ,setPagos ,disabled}) {
 
     const [cantidad, setCantidad] = useState(10000);
     const [total, setTotal] = useState(0);
     const [cantidadPagos, setCantidadPagos] = useState(0);
     const [plazo, setPlazo] = useState('Diario');
-    const [pagos, setPagos] = useState(0);
+    
 
     const min = 0;
     const max = 20000;
@@ -17,11 +17,10 @@ function Cotizador({ setPlan , setMonto, disabled}) {
     useEffect(() => {
 
         const resultadoTotal = calcularTotalPagar(cantidad);
-        
 
         setTotal(resultadoTotal);
 
-        if (plazo == 'Semanal') {
+        if (plazo === 'Semanal') {
 
             setCantidadPagos(9);
 
@@ -32,7 +31,7 @@ function Cotizador({ setPlan , setMonto, disabled}) {
         }
 
         setPlan(plazo);
-        setMonto(total);
+        setTotalCredito(total);
 
     }, [cantidad, plazo]);
 
@@ -40,7 +39,7 @@ function Cotizador({ setPlan , setMonto, disabled}) {
 
         setPagos(total / cantidadPagos);
 
-    }, [total])
+    }, [total, cantidadPagos])
 
 
     function handleChange(e) {
@@ -114,7 +113,7 @@ function Cotizador({ setPlan , setMonto, disabled}) {
 
             />
 
-            <p className="text-center my-10 text-5xl font-extrabold text-indigo-600">{formatearDinero(cantidad)}</p>
+            <p className="text-center 2xl:my-10 2xl:text-5xl font-extrabold text-indigo-600 my-1 text-4xl">{formatearDinero(cantidad)}</p>
 
             <h2 className="text-2xl font-extrabold text-gray-500 text-center">Elige un <span className="text-indigo-600">Plazo</span> a pagar</h2>
 

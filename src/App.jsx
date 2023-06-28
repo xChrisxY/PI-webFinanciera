@@ -10,34 +10,25 @@ import Login from "./components/Login";
 
 function App() {
 
-  //mx-auto para centrar contenido
-  // max-w-md mx-auto
-
-
-  const [listaClientes, setListaClientes] = useState(ejemplo);
+  const [listaClientes, setListaClientes] = useState([]);
   const [cliente, setCliente] = useState({});
-  
-  const eliminarCliente = (id) => {
-
-    const clientesActualizados = listaClientes.filter( cliente => cliente.curp !== id);
-
-    setListaClientes(clientesActualizados);
-
-  }
+  const [id, setId] = useState('');
 
   useEffect(() => {
 
-    // const getClientes = () => {
+    const getClientes = () => {
 
-    //   fetch('http://localhost:3000/api')
-    //     .then(res => res.json())
-    //     .then(res => setListaClientes(res));
+      fetch('http://localhost:5176/api')
+        .then(res => res.json())
+        .then(res => setListaClientes(res));
 
-    // }
+    }
 
-    // getClientes();
+    getClientes()
 
   }, []);
+
+
 
   return (
 
@@ -45,15 +36,15 @@ function App() {
 
       <Routes>
 
-        <Route path="/" element = {<Login />}/>
+        <Route path="/" element={<Login />} />
 
         <Route path="/menu" element={<MenuPrincipal />} />
 
-        <Route path="/registro" element = {<Formulario setListaClientes={setListaClientes} listaClientes={listaClientes} cliente = {cliente}/>}/>
+        <Route path="/registro" element={<Formulario setListaClientes={setListaClientes} listaClientes={listaClientes} cliente={cliente}/>} />
 
-        <Route path="/cobrar" element = {<Cobrar listaClientes={listaClientes}/>}/>
+        <Route path="/cobrar" element={<Cobrar listaClientes={listaClientes} cliente={cliente}/>} />
 
-        <Route path="/consultar" element = {<Busqueda listaClientes={listaClientes} eliminarCliente = {eliminarCliente} setCliente={ setCliente }/> }/>
+        <Route path="/consultar" element={<Busqueda listaClientes={listaClientes} setCliente = {setCliente}/>} />
 
       </Routes>
 

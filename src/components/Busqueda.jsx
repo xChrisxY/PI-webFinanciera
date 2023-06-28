@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
-import Modal from "./Modal";
 import { Navigate } from "react-router-dom";
 import { useRef } from "react";
+import Cobrar from "./Cobrar";
 
-function Busqueda({ listaClientes, eliminarCliente, setCliente }) {
+function Busqueda({ listaClientes, setCliente }) {
+
 
     const [nombre, setNombre] = useState('');
-    const [clientesFiltro, setClientesFiltro] = useState([listaClientes]);
-    const [openModal, setOpenModal] = useState(false);
+    const [clientesFiltro, setClientesFiltro] = useState([]);
     const [confirmacion, setConfirmacion] = useState(false);
-    const [id, setId] = useState('');
+    const [id, setId] = useState('')
     const [editar, setEditar] = useState(false);
+    const [cobrar, setCobrar] = useState(false);
 
     const idRef = useRef(id);
 
@@ -31,19 +32,6 @@ function Busqueda({ listaClientes, eliminarCliente, setCliente }) {
     }, [nombre, confirmacion]);
 
 
-    useEffect(() => {
-
-        if (confirmacion) {
-
-            eliminarCliente(id);
-
-        }
-
-        setConfirmacion(false);
-
-    }, [confirmacion]);
-
-
     const editarCliente = (e) => {
 
         idRef.current = e.target.id;
@@ -56,14 +44,32 @@ function Busqueda({ listaClientes, eliminarCliente, setCliente }) {
 
     };
 
-
-
-
     if (editar) {
 
         return (<Navigate to="/registro" />);
 
     }
+
+    const cobrarCliente = e => {
+
+        idRef.current = e.target.id;
+
+        const clienteAct = clientesFiltro.find(cliente => cliente.curp === idRef.current);
+
+        console.log(clienteAct)
+
+        setCliente(clienteAct);
+
+        setCobrar(true);
+
+    }
+
+    if (cobrar) {
+
+        return (<Navigate to="/cobrar" />)
+    }
+
+
 
     return (
 
@@ -75,7 +81,7 @@ function Busqueda({ listaClientes, eliminarCliente, setCliente }) {
 
                 <div className="flex justify-end p-10">
 
-                    <input type="text" id="curp" value={nombre} placeholder="Buscar" className="font-bold p-1 mx-6 border-b border-black" onChange={e => { setNombre(e.target.value.toUpperCase()) }} />
+                    <input type="text" id="curp" value={nombre} placeholder="Buscar" className="font-bold p-1 mx-6 border-b border-black" onChange={e => { setNombre(e.target.value) }} />
 
                 </div>
 
@@ -102,7 +108,7 @@ function Busqueda({ listaClientes, eliminarCliente, setCliente }) {
 
                             {clientesFiltro.map(cliente => {
 
-                                const { curp, nombre, telefono, correo } = cliente;
+                                const { curp, nombre, telefono, email } = cliente;
 
                                 return (
 
@@ -111,9 +117,9 @@ function Busqueda({ listaClientes, eliminarCliente, setCliente }) {
                                         <td className="p-3">{curp}</td>
                                         <td className="p-3">{nombre}</td>
                                         <td className="p-3">{telefono}</td>
-                                        <td className="p-3">{correo}</td>
+                                        <td className="p-3">{email}</td>
                                         <td><button className="bg-green-700 text-white rounded-md p-2" id={curp} onClick={editarCliente}>Editar</button></td>
-                                        <td><button className="bg-red-700 text-white rounded-md p-2" id={curp} onClick={e => { setOpenModal(true), setId(curp) }} > Eliminar </button></td>
+                                        <td><button className="bg-blue-800 text-white rounded-md p-2" id={curp} onClick={cobrarCliente } > Cobrar </button></td>
 
                                     </tr>
 
@@ -124,26 +130,6 @@ function Busqueda({ listaClientes, eliminarCliente, setCliente }) {
                         </tbody>
 
                     </table>
-
-                    <Modal isOpen={openModal} onClose={e => { setOpenModal(false) }}>
-
-                        <h2 className="font-bold mb-4 text-cyan-900 text-2xl text-center">¿Estás seguro?</h2>
-
-                        <form className="font-bold text-center">
-
-                            <p className="text-neutral-500 p-2">Si eliminas el cliente del sistema, se eliminará de forma permanente del sistema</p>
-
-                            <div className="p-2">
-
-                                <button className="border border-neutral-400 text-stone-500 p-2 m-5" onClick={e => { setOpenModal(false) }}>No, mantener cliente</button>
-                                <button className="bg-red-500 text-white p-2 m-5" onClick={e => { setOpenModal(false), setConfirmacion(true) }}>Si, eliminar cliente</button>
-
-                            </div>
-
-                        </form>
-
-                    </Modal>
-
 
                 </div>
 

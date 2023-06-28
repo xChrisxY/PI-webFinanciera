@@ -50,13 +50,6 @@ function Login() {
 
         swal("¡Éxito!", `Bienvenido ${nombre}`, "success");
 
-        setTimeout(() => {
-
-            
-
-        }, 3000);
-
-
         return (<Navigate to="/menu" />)
 
     }
@@ -69,7 +62,7 @@ function Login() {
 
                 <div className="m-10 p-5">
 
-                    <h1 className="text-blue-900 font-bold text-2xl"><span className="text-3xl">CADOFI</span> SERIVICIOS INTEGRALES</h1>
+                    <h1 className="text-blue-900 font-bold text-2xl"><span className="text-3xl block">CADOFI</span> SERIVICIOS INTEGRALES</h1>
                     <img src={img} alt="finanzas" className="w-96" />
 
                 </div>

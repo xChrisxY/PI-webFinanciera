@@ -2,7 +2,7 @@ function NavBar() {
 
     return (
 
-        <div className="p-10 bg-slate-900 grid grid-cols-2">
+        <div className="p-5 bg-slate-900 grid md:grid-cols-2 grid-cols-1">
 
             <div className="text-center">
 
