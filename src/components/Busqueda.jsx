@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
+import NavBar from "./NavBar";
 import { useRef } from "react";
 import Cobrar from "./Cobrar";
 
 function Busqueda({ listaClientes, setCliente }) {
+
 
 
     const [nombre, setNombre] = useState('');
@@ -73,68 +75,89 @@ function Busqueda({ listaClientes, setCliente }) {
 
     return (
 
-        <div className="bg-white">
+        <div className="flex flex-col min-h-screen bg-blue-950">
 
-            <div className="p-5">
+            <NavBar />
 
-                <h1 className="font-bold text-5xl text-center p-5">Lista de clientes</h1>
+            <div className="flex flex-col flex-grow items-center justify-center">
 
-                <div className="flex justify-end p-10">
+                <h1 className="font-bold text-5xl text-center text-white">Lista de clientes</h1>
 
-                    <input type="text" id="curp" value={nombre} placeholder="Buscar" className="font-bold p-1 mx-6 border-b border-black" onChange={e => { setNombre(e.target.value) }} />
+                <div className="p-10">
+
+                    <input
+                        type="text"
+                        id="nombre"
+                        value={nombre}
+                        placeholder="Buscar"
+                        className="font-bold p-1 mx-6 border-b border-white placeholder:bg-blue-950"
+                        onChange={e => { setNombre(e.target.value) }}
+                    />
 
                 </div>
 
-                <div className="bg-slate-100 m-5 p-5 border border-black">
+                <div className="m-5 p-5 border border-black bg-white text-black w-8/12">
 
-                    <table className="table-auto w-full">
+                    {clientesFiltro.length > 0
 
+                        ?
 
-                        <thead className="border-b border-gray-500">
+                        <table className="table-auto w-full text-xl">
 
-                            <tr>
-                                <th>CURP</th>
-                                <th>NOMBRE</th>
-                                <th>TELÉFONO</th>
-                                <th>CORREO</th>
-                                <th>EDITAR</th>
-                                <th>ELIMINAR</th>
+                            <thead className="border-b border-gray-500">
 
-                            </tr>
+                                <tr>
+                                    <th>CURP</th>
+                                    <th>NOMBRE</th>
+                                    <th>TELÉFONO</th>
+                                    <th>CORREO</th>
+                                    <th>EDITAR</th>
+                                    <th>COBRAR</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                {clientesFiltro.map(cliente => {
+
+                                    const { curp, nombre, telefono, email } = cliente;
+
+                                    return (
+
+                                        <tr className="border-b border-gray-500 text-center" key={curp}>
+
+                                            <td className="p-5">{curp}</td>
+                                            <td className="p-5">{nombre}</td>
+                                            <td className="p-5">{telefono}</td>
+                                            <td className="p-5">{email}</td>
+                                            <td><button className="bg-green-700 text-white rounded-md p-2 hover:bg-green-800" id={curp} onClick={editarCliente}>Editar</button></td>
+                                            <td><button className="bg-blue-800 text-white rounded-md p-2 hover:bg-blue-900" id={curp} onClick={cobrarCliente} > Cobrar </button></td>
+
+                                        </tr>
+
+                                    )
+
+                                })}
+
+                            </tbody>
+
+                        </table>
+
+                        :
+
+                        <div>
+
                             
-                        </thead>
 
-                        <tbody>
+                        </div>
 
-                            {clientesFiltro.map(cliente => {
-
-                                const { curp, nombre, telefono, email } = cliente;
-
-                                return (
-
-                                    <tr className="border-b border-gray-500 text-center" key={curp}>
-
-                                        <td className="p-3">{curp}</td>
-                                        <td className="p-3">{nombre}</td>
-                                        <td className="p-3">{telefono}</td>
-                                        <td className="p-3">{email}</td>
-                                        <td><button className="bg-green-700 text-white rounded-md p-2" id={curp} onClick={editarCliente}>Editar</button></td>
-                                        <td><button className="bg-blue-800 text-white rounded-md p-2" id={curp} onClick={cobrarCliente } > Cobrar </button></td>
-
-                                    </tr>
-
-                                )
-
-                            })}
-
-                        </tbody>
-
-                    </table>
+                    }
 
                 </div>
 
             </div>
-
 
         </div>
 

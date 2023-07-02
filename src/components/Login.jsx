@@ -2,13 +2,11 @@ import { useState } from "react";
 import axios from "axios";
 import img from "../img/finanzas.jpg";
 import { Navigate } from "react-router-dom"
-import swal from "sweetalert";
 
-function Login() {
+function Login({setEmpleado}) {
 
     const [credenciales, setCredenciales] = useState({ username: '', password: '' });
     const [acceso, setAcceso] = useState(false);
-    const [nombre, setNombre] = useState('');
 
     const mandarDatos = ({ target }) => {
 
@@ -30,9 +28,7 @@ function Login() {
 
             .then(({ data }) => {
 
-                console.log(data);
-
-                setNombre(data.usuario);
+                setEmpleado(data);
 
                 setAcceso(true);
 
@@ -47,8 +43,6 @@ function Login() {
     }
 
     if (acceso) {
-
-        swal("¡Éxito!", `Bienvenido ${nombre}`, "success");
 
         return (<Navigate to="/menu" />)
 

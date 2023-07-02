@@ -16,12 +16,12 @@ function NavBar() {
 
             <div>
 
-                <ul className="text-white font-mono flex justify-end text-xl">
+                <ul className="text-white font-mono flex justify-end text-xl pt-1">
 
-                    <li className="px-3 hover:bg-red-900">Inicio</li>
-                    <li className="px-3 hover:bg-red-900">Cobrados del dia</li>
-                    <li className="px-3 hover:bg-red-900">Actualizar Ticket</li>
-                    <li className="px-3 hover:bg-red-900">Salir</li>
+                    <li className="px-5 hover:bg-red-900 hover:rounded-md">Inicio</li>
+                    <li className="px-5 hover:bg-red-900 hover:rounded-md">Cobrados del dia</li>
+                    <li className="px-5 hover:bg-red-900 hover:rounded-md">Actualizar Ticket</li>
+                    <li className="px-5 hover:bg-red-900 hover:rounded-md">Salir</li>
 
 
                 </ul>

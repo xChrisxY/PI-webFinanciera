@@ -10,7 +10,7 @@ import work from "../img/work.png";
 import Cotizador from "./Cotizador";
 import { json } from "react-router-dom";
 
-function Formulario({ setListaClientes, listaClientes, cliente }) {
+function Formulario({ cliente, empleado }) {
 
     const [nombre, setNombre] = useState('');
     const [fechaNacimiento, setFechaNacimiento] = useState('');
@@ -86,8 +86,6 @@ function Formulario({ setListaClientes, listaClientes, cliente }) {
 
     }, [cliente]);
 
-
-
     const validarFormulario = (e) => {
 
         e.preventDefault();
@@ -102,11 +100,11 @@ function Formulario({ setListaClientes, listaClientes, cliente }) {
         } else {
 
             setError(false);
-
+            
             const objCliente = {
 
                 curp,
-                idEmpleado: 1,
+                idEmpleado: empleado.idEmpleado,
                 nombre,
                 email,
                 direccion,
@@ -117,6 +115,7 @@ function Formulario({ setListaClientes, listaClientes, cliente }) {
                 fechaNacimiento,
 
             }
+
 
             let idReferencia = Math.floor(Math.random() * 9000) + 1000;
             
@@ -238,8 +237,6 @@ function Formulario({ setListaClientes, listaClientes, cliente }) {
 
 
             Swal("¡Éxito!", "El cliente se ha agregado satisfactoriamente", "success");
-
-            //setListaClientes([...listaClientes, objCliente]);
 
         }
 

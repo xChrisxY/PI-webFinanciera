@@ -2,6 +2,7 @@ import img from "../img/cadofi.jpeg";
 import { Link } from 'react-router-dom';
 import NavBar from "./NavBar";
 
+
 function MenuPrincipal() {
 
     return (
@@ -14,12 +15,12 @@ function MenuPrincipal() {
 
                 <div className='text-white grid grid-cols-2'>
 
-                    <div className="text-center m-5">
+                    <div className="text-center m-5 mx-16">
 
-                        <h1 className="text-6xl font-bold">¡BIENVENIDO!</h1>
-                        <p className="p-2 font-bold"><span className="text-xl">Un nuevo día para hacer el mejor trabajo</span></p>
+                        <h1 className="text-6xl font-bold pb-5">¡BIENVENIDO!</h1>
+                        <p className="font-bold"><span className="text-xl">Un nuevo día para hacer el mejor trabajo</span></p>
 
-                        <div className="flex justify-center">
+                        <div className="flex justify-center pt-10">
 
                             <img src={img} alt="cadofoi logo" className="w-72" />
 
@@ -29,12 +30,12 @@ function MenuPrincipal() {
 
                     <div className="flex justify-center">
 
-                        <ul className="text-white font-mono text-2xl">
+                        <ul className="text-white font-mono text-2xl pt-5">
 
                             <li className="p-5 hover:text-blue-400"><Link to="/registro">Registrar cliente</Link></li>
                             <li className="p-5 hover:text-blue-400"><Link to="/cobrar">Registrar pago</Link></li>
                             <li className="p-5 hover:text-blue-400"><Link to="/consultar">Consultar clientes</Link></li>
-                            <li className="p-5 hover:text-blue-400"><Link>Historial de pagos</Link></li>
+                            <li className="p-5 hover:text-blue-400"><Link to="/historial">Historial de pagos</Link></li>
                             <li className="p-5 hover:text-blue-400"><Link>Generar reporte</Link></li>
                             <li className="p-5 hover:text-blue-400"><Link>Finalizar día</Link></li>
 

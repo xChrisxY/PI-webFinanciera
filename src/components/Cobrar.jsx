@@ -1,13 +1,11 @@
-import { useEffect, useState } from "react"
+import { Children, useEffect, useState } from "react"
 import img from "../img/candado.png";
 import NavBar from "../components/NavBar"
-import DownloadButton from "./DownloadButton";
-import DownloadButtonV from "./DownloadButtonV";
-import { info } from "autoprefixer";
+import swal from "sweetalert";
 
-function Cobrar({ listaClientes, cliente }) {
+function Cobrar({ listaClientes, cliente, empleado }) {
 
-    const [id, setId] = useState('');
+    const [mostrar, setMostrar] = useState(false);
     const [seleccionado, setSeleccionado] = useState(false);
     const [nombre, setNombre] = useState('');
     const [fechaNacimiento, setFechaNacimiento] = useState('');
@@ -17,6 +15,7 @@ function Cobrar({ listaClientes, cliente }) {
     const [rfc, setRfc] = useState('');
     const [estadoCivil, setEstadoCivil] = useState('');
     const [direccion, setDireccion] = useState('')
+    const [monto, setMonto] = useState(0);
 
     const [folio, setFolio] = useState(0);
     const fecha = `${new Date().getDate()}-${new Date().getMonth() + 1}-${new Date().getFullYear()}`;
@@ -27,10 +26,13 @@ function Cobrar({ listaClientes, cliente }) {
     const [saldoRestante, setSaldoRestante] = useState(0);
     const [montoTotal, setMontoTotal] = useState(0);
     const [nPago, setNpago] = useState(0);
+    const [infoSucursal, setInfoSucursal] = useState([]);
+    const [ubicacion, setUbicacion] = useState('');
+    const [gestor, setGestor] = useState('');
+    const [habilitado, setHabilitado] = useState(true);
 
     const [infoCredito, setInfoCredito] = useState({});
     const [pagosRealizados, setPagosRealizados] = useState([]);
-
 
     useEffect(() => {
 
@@ -47,7 +49,7 @@ function Cobrar({ listaClientes, cliente }) {
 
             const getCredito = () => {
 
-                fetch(`http://localhost:5176/api/credito${cliente.curp}`)
+                fetch(`http://localhost:5176/api/credito/${cliente.curp}`)
                     .then(res => res.json())
                     .then(res => setInfoCredito(res));
 
@@ -55,11 +57,42 @@ function Cobrar({ listaClientes, cliente }) {
 
             getCredito()
 
+            setMostrar(true);
+
             setSeleccionado(true);
 
         }
 
     }, []);
+
+
+    useEffect(() => {
+
+        setGestor(empleado.nombre);
+
+        const getSucursal = () => {
+
+            fetch(`http://localhost:5176/api/sucursal/${empleado.nuevoIdSucursal}`)
+                .then(res => res.json())
+                .then(res => setInfoSucursal(res));
+
+        }
+
+        getSucursal();
+
+    }, []);
+
+    useEffect(() => {
+
+        if (infoSucursal.length > 0) {
+
+            console.log("hola");    
+            setUbicacion(infoSucursal[0].ubicacion);
+
+        }
+
+    }, [infoSucursal])
+
 
     const realizarCobro = e => {
 
@@ -86,20 +119,25 @@ function Cobrar({ listaClientes, cliente }) {
 
         getCredito();
 
-
+        setMostrar(true);
         setSeleccionado(true);
+        setGestor(empleado.nombre);
 
     }
 
     useEffect(() => {
 
-        setFolio(Math.floor(Math.random() * 9000) + 1000);
-        setMontoDiario(infoCredito[0].pagos);
-        setIdCredito(infoCredito[0].idCredito);
-        setMontoTotal(infoCredito[0].totalCredito);
+        if (mostrar) {
 
+            setFolio(Math.floor(Math.random() * 9000) + 1000);
+            setMontoDiario(infoCredito[0].pagos);
+            setIdCredito(infoCredito[0].idCredito);
+            setMontoTotal(infoCredito[0].totalCredito);
+
+        }
 
     }, [infoCredito])
+
 
     useEffect(() => {
 
@@ -129,28 +167,23 @@ function Cobrar({ listaClientes, cliente }) {
 
         setNpago(pagosRealizados.length + 1)
         setSaldoRestante(montoTotal - suma);
+        setMonto(montoDiario);
 
     }, [pagosRealizados]);
 
 
     const registrarPago = () => {
 
-        const monto = montoDiario;
-        
-
         const pago = {
 
             idCredito,
             fecha,
             hora,
-            monto
+            monto,
 
         }
 
-        console.log(pago);
-        console.log(JSON.stringify(pago));
-
-        const requestInit = {
+        const enviarPago = {
 
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -158,10 +191,13 @@ function Cobrar({ listaClientes, cliente }) {
 
         }
 
-        fetch('http://localhost:5176/api/pago', requestInit)
+        fetch('http://localhost:5176/api/pago', enviarPago)
             .then(res => res.json())
             .then(res => console.log(res));
-        
+
+        swal("¡Éxito!", "El pago se ha registrado correctamente", "success");
+        setHabilitado(true);
+
     }
 
 
@@ -250,8 +286,8 @@ function Cobrar({ listaClientes, cliente }) {
                             <p className="p-5 font-bold text-blue-900">Folio de pago: <span className="text-gray-500">{folio}</span></p>
                             <p className="p-5 font-bold text-blue-900">Fecha de pago: <span className="text-gray-500">{fecha}</span></p>
                             <p className="p-5 font-bold text-blue-900">Hora de pago: <span className="text-gray-500">{hora}</span></p>
-                            <p className="p-5 font-bold text-blue-900">Sucursal: <span className="text-gray-500">San Cristobal de las Casas</span></p>
-                            <p className="p-5 font-bold text-blue-900">Gestor de venta: <span className="text-gray-500">Christopher Yahir</span></p>
+                            <p className="p-5 font-bold text-blue-900">Sucursal: <span className="text-gray-500">{ubicacion}</span></p>
+                            <p className="p-5 font-bold text-blue-900">Gestor de venta: <span className="text-gray-500">{gestor}</span></p>
                             <p className="p-5 font-bold text-blue-900">No. de pago: <span className="text-gray-500">{nPago}</span></p>
                             <p className="p-5 font-bold text-blue-900">Saldo restante:<span className="text-gray-500"> ${saldoRestante}</span></p>
 
@@ -267,7 +303,10 @@ function Cobrar({ listaClientes, cliente }) {
 
                             </button>
 
-                            <button className="bg-blue-900 text-white font-bold rounded-md  pt-2 pb-2 px-2 mx-5">
+                            <button
+                                className="bg-blue-900 text-white font-bold rounded-md pt-2 pb-2 px-2 mx-5"
+                                onClick={e => { setHabilitado(false) }}
+                            >
 
                                 <span className="text-lg block">Otra</span>
 
@@ -280,10 +319,11 @@ function Cobrar({ listaClientes, cliente }) {
                         <div>
 
                             <input
-                                type="text"
+                                type="number"
                                 placeholder="Ingrese otra cantidad"
                                 className="p-2 placeholder:bg-slate-300 placeholder:font-bold m-1"
-                                disabled
+                                disabled={habilitado}
+                                onChange={e => { setMonto(+e.target.value) }}
                             />
 
                         </div>
