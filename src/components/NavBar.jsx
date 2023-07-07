@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 function NavBar() {
 
     return (
@@ -18,8 +20,8 @@ function NavBar() {
 
                 <ul className="text-white font-mono flex justify-end text-xl pt-1">
 
-                    <li className="px-5 hover:bg-red-900 hover:rounded-md">Inicio</li>
-                    <li className="px-5 hover:bg-red-900 hover:rounded-md">Cobrados del dia</li>
+                    <li className="px-5 hover:bg-red-900 hover:rounded-md"><Link to="/menu">Inicio</Link></li>
+                    <li className="px-5 hover:bg-red-900 hover:rounded-md"><Link to="/cobrados">Cobrados del dia</Link></li>
                     <li className="px-5 hover:bg-red-900 hover:rounded-md">Actualizar Ticket</li>
                     <li className="px-5 hover:bg-red-900 hover:rounded-md">Salir</li>
 

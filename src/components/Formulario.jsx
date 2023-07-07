@@ -1,6 +1,6 @@
 import Button from "./Button"
 import NavBar from "./NavBar"
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Swal from 'sweetalert';
 import Modal from "./Modal";
 import bank from "../img/bank.png";
@@ -9,8 +9,11 @@ import personal from "../img/personal.png"
 import work from "../img/work.png";
 import Cotizador from "./Cotizador";
 import { json } from "react-router-dom";
+import { AppContext } from "../context/AppContext"
 
-function Formulario({ cliente, empleado }) {
+function Formulario() {
+
+    const { cliente, empleado } = useContext(AppContext);
 
     const [nombre, setNombre] = useState('');
     const [fechaNacimiento, setFechaNacimiento] = useState('');
@@ -100,7 +103,7 @@ function Formulario({ cliente, empleado }) {
         } else {
 
             setError(false);
-            
+
             const objCliente = {
 
                 curp,
@@ -118,29 +121,49 @@ function Formulario({ cliente, empleado }) {
 
 
             let idReferencia = Math.floor(Math.random() * 9000) + 1000;
-            
 
-            const objReferenciaPersonal = { idReferencia, curp, nombreParentesco, parentesco, direccionParentesco ,telefonoParentesco }
 
-            const objReferenciaLaboral = { idReferencia ,curp, nombreEmpresa, salario , telefonoEmpresa, direccionEmpresa, puesto }
+            const objReferenciaPersonal = { idReferencia, curp, nombreParentesco, parentesco, direccionParentesco, telefonoParentesco }
+
+            const objReferenciaLaboral = { idReferencia, curp, nombreEmpresa, salario, telefonoEmpresa, direccionEmpresa, puesto }
 
             const objReferenciaCrediticia = { idReferencia, curp, buroCredito, creditoActual, importeCredito }
 
             const objReferenciaBancaria = { idReferencia, curp, tarjetaCredito, tarjetaDebito, cuentaBancaria }
 
-            const fechaActual = new Date();
-
-            const fechaFinal = new Date(fechaActual);
-
-            fechaFinal.setDate(fechaFinal.getDate() + 66);
             const idCredito = idReferencia;
+
+            // const fechaActual = new Date();
+
+            // const fechaFinal = new Date(fechaActual);
+
+            // fechaFinal.setDate(fechaFinal.getDate() + 66);
+
+            const currentDate = new Date();
+
+            const day = currentDate.getDate().toString().padStart(2, '0');
+            const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+            const year = currentDate.getFullYear().toString();
+
+            const fechaInicio = `${day}-${month}-${year}`;
+
+            //Obtenemos la fecha actual
+
+            //Formateamos y obtenemos la fecha en 66 días
+            currentDate.setDate(currentDate.getDate() + 66)
+
+            const dia = currentDate.getDate().toString().padStart(2, '0');
+            const mes = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+            const anio = currentDate.getFullYear().toString();
+
+            const fechaTermino = `${dia}-${mes}-${anio}`;
 
             const objInfoCredito = {
 
                 idCredito,
                 curp,
-                fechaInicio: `${new Date().getDate()}-${new Date().getMonth() + 1}-${new Date().getFullYear()}`,
-                fechaTermino: `${fechaFinal.getFullYear()}-${parseInt(fechaFinal.getMonth() + 1)}-${fechaFinal.getDate()}`,
+                fechaInicio,
+                fechaTermino,
                 TotalCredito,
                 plan,
                 pagos: Math.floor(pagos),

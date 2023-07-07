@@ -6,26 +6,9 @@ import { useEffect, useState } from "react"
 import Cobrar from "./components/Cobrar";
 import Login from "./components/Login";
 import Historial from "./components/Historial";
+import CobradosDia from "./components/CobradosDia";
 
 function App() {
-
-  const [listaClientes, setListaClientes] = useState([]);
-  const [empleado, setEmpleado] = useState({});
-  const [cliente, setCliente] = useState({});
-
-  useEffect(() => {
-
-    const getClientes = () => {
-
-      fetch(`http://localhost:5176/api/cliente/${empleado.idEmpleado}`)
-        .then(res => res.json())
-        .then(res => setListaClientes(res));
-
-    }
-
-    getClientes()
-
-  }, [empleado]);
 
   return (
 
@@ -33,17 +16,19 @@ function App() {
 
       <Routes>
 
-        <Route path="/" element={<Login setEmpleado = {setEmpleado}/>} />
+        <Route path="/" element={<Login />} />
 
         <Route path="/menu" element={<MenuPrincipal />} />
 
-        <Route path="/registro" element={<Formulario cliente={cliente} empleado = {empleado}/>} />
+        <Route path="/registro" element={<Formulario />} />
 
-        <Route path="/cobrar" element={<Cobrar listaClientes={listaClientes} cliente={cliente} empleado={empleado}/>} />
+        <Route path="/cobrar" element={<Cobrar />} />
 
-        <Route path="/consultar" element={<Busqueda listaClientes={listaClientes} setCliente = {setCliente}/>} />
+        <Route path="/consultar" element={<Busqueda />} />
 
-        <Route path="/historial" element = {<Historial listaClientes = {listaClientes}/>}/>
+        <Route path="/historial" element={<Historial />} />
+
+        <Route path="/cobrados" element={<CobradosDia />} />
 
       </Routes>
 

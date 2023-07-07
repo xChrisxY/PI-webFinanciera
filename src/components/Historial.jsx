@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
+import { AppContext } from "../context/AppContext";
 import NavBar from "./NavBar"
 
-function Historial({ listaClientes }) {
+function Historial() {
+
+  const { listaClientes } = useContext(AppContext);
 
   const [infoCredito, setInfoCredito] = useState({});
   const [nombre, setNombre] = useState('');

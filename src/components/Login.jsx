@@ -1,12 +1,18 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import img from "../img/finanzas.jpg";
 import { Navigate } from "react-router-dom"
+import { AppContext } from "../context/AppContext"
+import swal from "sweetalert";
 
-function Login({setEmpleado}) {
+function Login() {
+
+    const { acceso, setAcceso } = useContext(AppContext);
 
     const [credenciales, setCredenciales] = useState({ username: '', password: '' });
-    const [acceso, setAcceso] = useState(false);
+
+    const [pagosDelDia, setPagosDelDia] = useState([]);
+    const [empleado, setEmpleado] = useState({}); // Variable temporal
 
     const mandarDatos = ({ target }) => {
 
@@ -28,9 +34,42 @@ function Login({setEmpleado}) {
 
             .then(({ data }) => {
 
+                // setEmpleado(data);
+
+                const currentDate = new Date();
+
+                const day = currentDate.getDate().toString().padStart(2, '0');
+                const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+                const year = currentDate.getFullYear().toString();
+
+                const fechaActual = `${day}-${month}-${year}`;
+
+                console.log(data.idEmpleado);
+                console.log(fechaActual);
+
+                const informacion = {
+
+                    idEmpleado: data.idEmpleado,
+                    fecha: fechaActual
+
+                }
+
+                const getCobrados = () => {
+
+                    const query = new URLSearchParams(informacion).toString();
+                    const url = `http://localhost:5176/api/cobradosDia?${query}`;
+
+                    fetch(url)
+                        .then(res => res.json())
+                        .then(res => setPagosDelDia(res));
+
+                }
+
+                getCobrados();
+
                 setEmpleado(data);
 
-                setAcceso(true);
+                comprobarPagos();
 
             })
 
@@ -41,6 +80,48 @@ function Login({setEmpleado}) {
             })
 
     }
+
+
+    useEffect(() => {
+
+        if (Object.keys(empleado).length > 0) {
+
+            console.log("Aqui está pasando");
+
+            if (pagosDelDia.length > 0) {
+
+                console.log(pagosDelDia)
+
+                console.log("Si hay cobros realizados, entonces no se le permite ingresar de nuevo");
+
+                swal("Lo sentimos!", "Lo sentimos, pero ya haz finalizado el día", "warning");
+
+                console.log(empleado);
+
+                setEmpleado({});
+                setCredenciales({ username: '', password: '' });
+
+            } else {
+
+                console.log("No hay pagos realizados, entonces si se le permite ingresar");
+
+                setAcceso(true);   
+
+                localStorage.setItem('Empleado', JSON.stringify(empleado));
+
+                setCredenciales({ username: '', password: '' });
+
+                setEmpleado({});
+
+            }
+
+            console.log(pagosDelDia);
+
+
+        }
+
+    }, [pagosDelDia]);
+
 
     if (acceso) {
 
@@ -56,7 +137,7 @@ function Login({setEmpleado}) {
 
                 <div className="m-10 p-5">
 
-                    <h1 className="text-blue-900 font-bold text-2xl"><span className="text-3xl block">CADOFI</span> SERIVICIOS INTEGRALES</h1>
+                    <h1 className="text-blue-900 font-bold text-2xl text-center"><span className="text-3xl block text-center">CADOFI</span> SERIVICIOS INTEGRALES</h1>
                     <img src={img} alt="finanzas" className="w-96" />
 
                 </div>

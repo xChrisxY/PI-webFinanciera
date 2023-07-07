@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Navigate } from "react-router-dom";
 import NavBar from "./NavBar";
 import { useRef } from "react";
 import Cobrar from "./Cobrar";
+import { AppContext } from "../context/AppContext";
 
-function Busqueda({ listaClientes, setCliente }) {
+function Busqueda() {
 
-
+    const { listaClientes, setCliente } = useContext(AppContext);
 
     const [nombre, setNombre] = useState('');
     const [clientesFiltro, setClientesFiltro] = useState([]);
@@ -70,8 +71,6 @@ function Busqueda({ listaClientes, setCliente }) {
 
         return (<Navigate to="/cobrar" />)
     }
-
-
 
     return (
 

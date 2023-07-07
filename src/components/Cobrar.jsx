@@ -1,9 +1,12 @@
-import { Children, useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import img from "../img/candado.png";
 import NavBar from "../components/NavBar"
 import swal from "sweetalert";
+import { AppContext } from "../context/AppContext";
 
-function Cobrar({ listaClientes, cliente, empleado }) {
+function Cobrar() {
+
+    const { listaClientes, cliente, empleado } = useContext(AppContext);
 
     const [mostrar, setMostrar] = useState(false);
     const [seleccionado, setSeleccionado] = useState(false);
@@ -18,7 +21,16 @@ function Cobrar({ listaClientes, cliente, empleado }) {
     const [monto, setMonto] = useState(0);
 
     const [folio, setFolio] = useState(0);
-    const fecha = `${new Date().getDate()}-${new Date().getMonth() + 1}-${new Date().getFullYear()}`;
+
+    const currentDate = new Date();
+
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const year = currentDate.getFullYear().toString();
+    
+    const fecha = `${day}-${month}-${year}`;
+
+
     const hora = `${new Date().getHours()} : ${new Date().getMinutes()}`
 
     const [idCredito, setIdCredito] = useState(0);
@@ -85,8 +97,7 @@ function Cobrar({ listaClientes, cliente, empleado }) {
     useEffect(() => {
 
         if (infoSucursal.length > 0) {
-
-            console.log("hola");    
+    
             setUbicacion(infoSucursal[0].ubicacion);
 
         }
