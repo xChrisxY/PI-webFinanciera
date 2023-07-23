@@ -1,47 +1,25 @@
 import { useEffect, useState, useContext } from "react";
 import { Navigate } from "react-router-dom";
 import NavBar from "./NavBar";
-import { useRef } from "react";
 import Cobrar from "./Cobrar";
 import { AppContext } from "../context/AppContext";
 
 function Busqueda() {
 
-    const { listaClientes, setCliente } = useContext(AppContext);
+    const { listaClientes, setCliente, ubicacion, empleado } = useContext(AppContext);
 
     const [nombre, setNombre] = useState('');
     const [clientesFiltro, setClientesFiltro] = useState([]);
     const [confirmacion, setConfirmacion] = useState(false);
-    const [id, setId] = useState('')
     const [editar, setEditar] = useState(false);
     const [cobrar, setCobrar] = useState(false);
 
-    const idRef = useRef(id);
-
-    //Apartado de busqueda en 
-    useEffect(() => {
-
-        setClientesFiltro(listaClientes.filter((c) => {
-
-            if (c.nombre.includes(nombre)) {
-
-                return c;
-
-            }
-
-        }));
-
-
-    }, [nombre, confirmacion]);
+    const [cls, setCls] = useState([]);
 
 
     const editarCliente = (e) => {
 
-        idRef.current = e.target.id;
-
-        const clienteAct = clientesFiltro.find(cliente => cliente.curp === idRef.current);
-
-        setCliente(clienteAct);
+        localStorage.setItem('ID', JSON.stringify(e.target.id));
 
         setEditar(true);
 
@@ -55,13 +33,13 @@ function Busqueda() {
 
     const cobrarCliente = e => {
 
-        idRef.current = e.target.id;
+        const aCobrar = listaClientes.find(cliente => cliente.curp === e.target.id);
 
-        const clienteAct = clientesFiltro.find(cliente => cliente.curp === idRef.current);
+        console.log("El cliente a cobrar es: ");
 
-        console.log(clienteAct)
+        console.log(aCobrar);
 
-        setCliente(clienteAct);
+        localStorage.setItem('COBRO', JSON.stringify(aCobrar));
 
         setCobrar(true);
 
@@ -80,79 +58,68 @@ function Busqueda() {
 
             <div className="flex flex-col flex-grow items-center justify-center">
 
-                <h1 className="font-bold text-5xl text-center text-white">Lista de clientes</h1>
+                <div className="bg-white shadow-md p-0">
 
-                <div className="p-10">
+                    {/* <h1 className="lg:text-3xl text-black pb-5 text-center font-bold">Lista de clientes de la sucursal {ubicacion}</h1> */}
 
-                    <input
-                        type="text"
-                        id="nombre"
-                        value={nombre}
-                        placeholder="Buscar"
-                        className="font-bold p-1 mx-6 border-b border-white placeholder:bg-blue-950"
-                        onChange={e => { setNombre(e.target.value) }}
-                    />
+                    <div className="border border-black bg-gray-200 text-black">
 
-                </div>
+                        <div className="h-96 overflow-auto">
 
-                <div className="m-5 p-5 border border-black bg-white text-black w-8/12">
+                            <div className="table-responsive">
 
-                    {clientesFiltro.length > 0
+                                <table className="table-auto w-full border border-gray-500">
 
-                        ?
+                                    <thead className="sticky top-0 bg-gray-200">
 
-                        <table className="table-auto w-full text-xl">
+                                        <tr className="border-b border-white bg-slate-300">
 
-                            <thead className="border-b border-gray-500">
-
-                                <tr>
-                                    <th>CURP</th>
-                                    <th>NOMBRE</th>
-                                    <th>TELÉFONO</th>
-                                    <th>CORREO</th>
-                                    <th>EDITAR</th>
-                                    <th>COBRAR</th>
-
-                                </tr>
-
-                            </thead>
-
-                            <tbody>
-
-                                {clientesFiltro.map(cliente => {
-
-                                    const { curp, nombre, telefono, email } = cliente;
-
-                                    return (
-
-                                        <tr className="border-b border-gray-500 text-center" key={curp}>
-
-                                            <td className="p-5">{curp}</td>
-                                            <td className="p-5">{nombre}</td>
-                                            <td className="p-5">{telefono}</td>
-                                            <td className="p-5">{email}</td>
-                                            <td><button className="bg-green-700 text-white rounded-md p-2 hover:bg-green-800" id={curp} onClick={editarCliente}>Editar</button></td>
-                                            <td><button className="bg-blue-800 text-white rounded-md p-2 hover:bg-blue-900" id={curp} onClick={cobrarCliente} > Cobrar </button></td>
+                                            <th className="lg:p-3 text-sm p-1 md:text-lg lg:text-xl hidden lg:table-cell">CURP</th>
+                                            <th className="lg:p-3 text-sm p-1 md:text-lg lg:text-xl">NOMBRE</th>
+                                            <th className="lg:p-3 text-sm p-1 md:text-lg lg:text-xl">TELÉFONO</th>
+                                            <th className="lg:p-3 text-sm p-1 md:text-lg lg:text-xl">CORREO</th>
+                                            <th className="lg:p-3 text-sm p-1 md:text-lg lg:text-xl">ACCIÓN</th>
 
                                         </tr>
 
-                                    )
+                                    </thead>
 
-                                })}
+                                    <tbody className="flex-col">
 
-                            </tbody>
+                                        {listaClientes.map(cliente => {
 
-                        </table>
+                                            const { curp, nombre, telefono, email } = cliente;
 
-                        :
+                                            return (
 
-                        <div>
+                                                <tr className="border-2  border-gray-500 text-center font-bold" key={curp}>
 
-                            
+                                                    <td className="lg:p-3 text-sm md:text-lg lg:text-lg hidden lg:table-cell">{curp}</td>
+                                                    <td className="lg:p-3 text-sm md:text-lg lg:text-xl">{nombre}</td>
+                                                    <td className="lg:p-3 text-sm md:text-lg lg:text-xl">{telefono}</td>
+                                                    <td className="lg:p-3 text-sm md:text-lg lg:text-xl">{email}</td>
+
+                                                    <td className="p-3 text-sm md:text-lg lg:text-xl lg:inline-flex ">
+
+                                                        <button className="bg-green-700 text-white rounded-md p-1 hover:bg-green-800 lg:m-2 my-1" id={curp} onClick={editarCliente}>Editar</button>
+                                                        <button className="bg-blue-800 text-white rounded-md p-1 hover:bg-blue-900 lg:m-2 " id={curp} onClick={cobrarCliente}>Cobrar</button>
+
+                                                    </td>
+
+                                                </tr>
+
+                                            )
+
+                                        })}
+
+                                    </tbody>
+
+                                </table>
+                            </div>
 
                         </div>
 
-                    }
+                    </div>
 
                 </div>
 

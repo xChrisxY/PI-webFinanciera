@@ -4,14 +4,13 @@ import Button from "./Button";
 
 function Cotizador({ setPlan , setTotalCredito, pagos ,setPagos ,disabled}) {
 
-    const [cantidad, setCantidad] = useState(10000);
+    const [cantidad, setCantidad] = useState(25000);
     const [total, setTotal] = useState(0);
     const [cantidadPagos, setCantidadPagos] = useState(0);
     const [plazo, setPlazo] = useState('Diario');
-    
 
     const min = 0;
-    const max = 20000;
+    const max = 50000;
     const step = 100;
 
     useEffect(() => {

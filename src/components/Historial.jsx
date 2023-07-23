@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react"
 import { AppContext } from "../context/AppContext";
 import NavBar from "./NavBar"
+import image from "../img/lupa.png"
 
 function Historial() {
 
@@ -10,7 +11,7 @@ function Historial() {
   const [nombre, setNombre] = useState('');
   const [curp, setCurp] = useState('');
   const [telefono, setTelefono] = useState('');
-  const [direccion, setDireccion] = useState('');
+  const [calle, setCalle] = useState('');
   const [nPago, setNpago] = useState(0);
   const [fechaInicio, setFechaInicio] = useState('');
   const [fechaTermino, setFechaTermino] = useState('');
@@ -29,7 +30,7 @@ function Historial() {
     setNombre(cliente.nombre);
     setCurp(cliente.curp);
     setTelefono(cliente.telefono);
-    setDireccion(cliente.direccion);
+    setCalle(cliente.calle);
 
     //Obtenemos los datos del crédito
     const getCredito = () => {
@@ -61,8 +62,6 @@ function Historial() {
 
   useEffect(() => {
 
-    console.log("hola")
-
     //Obtenemos los datos de los pagos
     const getPagos = () => {
 
@@ -81,8 +80,6 @@ function Historial() {
   useEffect(() => {
 
     if (mostrar) {
-
-      console.log(pagosRealizados);
 
       let suma = 0;
 
@@ -107,21 +104,22 @@ function Historial() {
 
       <div className="flex flex-col flex-grow items-center justify-center">
 
-        <div className="bg-white p-10 shadow-md">
+        <div className="bg-white lg:p-10 shadow-md p-3">
 
           <h1 className="text-4xl font-bold pb-5 text-center">Lista de pagos</h1>
 
-          <div className="flex justify-end py-3">
+          <div className="flex justify-end">
 
-            <h1 className="text-xl font-bold text-gray-400 pt-3 px-3">Selecciona a un cliente</h1>
+            <h1 className="text-xl font-bold text-gray-400 lg:pt-3 lg:px-3">Selecciona a un cliente</h1>
 
             <select
               name="clientes"
               id="clientes"
-              className="p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none
+              className="p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none
             bg-blue-900 text-white font-bold text-center border-4 border-white"
             >
 
+              <option value="">Escoge un cliente</option>
               {listaClientes.map(opcion => (
 
                 <option key={opcion.curp} value={opcion.curp} onClick={llenarDatos}>
@@ -136,7 +134,7 @@ function Historial() {
 
           </div>
 
-          <div className="grid grid-cols-2 p-5 m-5">
+          <div className="lg:grid lg:grid-cols-2 px-5 m-5 grid-cols-1">
 
             <div className="py-5 px-5 font-bold text-blue-900 text-xl">
 
@@ -146,7 +144,7 @@ function Historial() {
                   <p className="py-4">Cliente : <span className="text-gray-500">{nombre}</span></p>
                   <p className="py-4">Curp : <span className="text-gray-500">{curp}</span></p>
                   <p className="py-4">Teléfono : <span className="text-gray-500">{telefono}</span></p>
-                  <p className="py-4">Dirección: <span className="text-gray-500">{direccion}</span></p>
+                  <p className="py-4">Dirección: <span className="text-gray-500">{calle}</span></p>
                 </div>
                 :
 
@@ -201,10 +199,10 @@ function Historial() {
 
                   <tr className="border-b border-white bg-slate-300">
 
-                    <th className="p-3">No. Pago</th>
-                    <th className="p-3">Fecha</th>
-                    <th className="p-3">Hora</th>
-                    <th className="p-3">Monto</th>
+                    <th className="lg:p-3">No. Pago</th>
+                    <th className="lg:p-3">Fecha</th>
+                    <th className="lg:p-3">Hora</th>
+                    <th className="lg:p-3">Monto</th>
 
                   </tr>
 
@@ -216,12 +214,12 @@ function Historial() {
 
                     return (
 
-                      <tr className="border-b border-gray-500 text-center" key={pago.idPago}>
-
-                        <td className="p-3 font-bold text-red-900">{index + 1}</td>
-                        <td className="p-3 font-bold text-blue-900">{pago.fecha}</td>
-                        <td className="p-3 font-bold text-blue-900">{pago.hora}</td>
-                        <td className="p-3 text-green-900 font-bold">${pago.monto}</td>
+                      <tr className="border-b border-gray-500 text-center font-bold" key={pago.idPago}>
+ 
+                        <td className="lg:p-3 lg:text-lg p-2 text-sm text-red-900">{index + 1}</td>
+                        <td className="lg:p-3 lg:text-lg p-2 text-sm text-blue-900">{pago.fecha}</td>
+                        <td className="lg:p-3 lg:text-lg p-2 text-sm text-blue-900">{pago.hora}</td>
+                        <td className="lg:p-3 lg:text-lg p-2 text-sm text-green-900">${pago.monto}</td>
 
                       </tr>
 
@@ -236,7 +234,7 @@ function Historial() {
 
 
               </table>
-              
+
             </div>
 
             {pagosRealizados.length === 0

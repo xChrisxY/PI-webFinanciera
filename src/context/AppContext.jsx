@@ -5,9 +5,20 @@ export const AppContext = createContext();
 export function AppContextProvider(props) {
 
       const [listaClientes, setListaClientes] = useState([]);
+      const [gestores, setGestores] = useState([]);
+
+      const [solicitudes, setSolicitudes] = useState([]);
       const [empleado, setEmpleado] = useState({});
       const [cliente, setCliente] = useState({});
       const [acceso, setAcceso] = useState(false);
+      const [agregado, setAgregado] = useState(false);
+
+      const [aceptado, setAceptado] = useState(false);
+
+      //las tres variables que has movido
+      const [infoSucursal, setInfoSucursal] = useState([]);
+      const [gestor, setGestor] = useState('');
+      const [ubicacion, setUbicacion] = useState('');
 
       useEffect(() => {
 
@@ -15,13 +26,8 @@ export function AppContextProvider(props) {
 
             if (trabajador) {
 
-
-                  console.log("Obtenemos el objeto de LocalStorage y lo convertimos a objeto")
-                  console.log(JSON.parse(trabajador));
-
                   setEmpleado(JSON.parse(trabajador));
                   setAcceso(true);
-                  console.log("hola")
 
             }
 
@@ -29,12 +35,10 @@ export function AppContextProvider(props) {
 
       useEffect(() => {
 
-            console.log(empleado);
+            //agregamos el nombre del gestor nomas se carge la información de este.
+            setGestor(empleado.nombre);
 
             if (acceso) {
-
-                  console.log("Vemos la información del empleado para ver si podemos enviar los datos")
-                  console.log(empleado);
 
                   const getClientes = () => {
 
@@ -44,13 +48,59 @@ export function AppContextProvider(props) {
 
                   }
 
-                  console.log("hola");
                   getClientes();
-
 
             }
 
-      }, [empleado]);
+            setAgregado(false);
+
+      }, [empleado, agregado]);
+
+      useEffect(() => {
+            // posible validación para obtener un dato u otro
+            if (empleado.puesto === 'Gerente') {
+
+                  const getGestores = () => {
+
+                        fetch("http://localhost:5176/api/gestores/" + empleado.IdSucursal)
+                              .then(res => res.json())
+                              .then(res => setGestores(res));
+                  }
+
+                  getGestores();
+            }
+
+      }, [empleado, gestor, aceptado]);
+
+
+      //aqui empieza lo que has movido
+      useEffect(() => {
+
+            const getSucursal = () => {
+
+                  fetch(`http://localhost:5176/api/sucursal/${empleado.IdSucursal}`)
+                        .then(res => res.json())
+                        .then(res => setInfoSucursal(res));
+
+            }
+
+            getSucursal();
+
+      }, [listaClientes]);
+
+      useEffect(() => {
+
+            console.log(infoSucursal);
+
+            if (infoSucursal.length > 0) {
+
+                  setUbicacion(infoSucursal[0].ubicacion);
+
+            }
+
+      }, [infoSucursal]);
+      // aqui termina
+
 
       return (
 
@@ -63,7 +113,14 @@ export function AppContextProvider(props) {
                   cliente,
                   setCliente,
                   acceso,
-                  setAcceso
+                  setAcceso,
+                  gestor,
+                  ubicacion,
+                  setAgregado,
+                  setAceptado,
+                  gestores,
+                  setGestores,
+
 
             }}>
 

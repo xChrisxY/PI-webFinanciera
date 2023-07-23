@@ -3,7 +3,8 @@ import axios from "axios";
 import img from "../img/finanzas.jpg";
 import { Navigate } from "react-router-dom"
 import { AppContext } from "../context/AppContext"
-import swal from "sweetalert";
+import Swal from "sweetalert";
+
 
 function Login() {
 
@@ -30,52 +31,110 @@ function Login() {
 
         e.preventDefault();
 
-        axios.post('http://localhost:4000/api/login', credenciales)
+        console.log(credenciales);
 
-            .then(({ data }) => {
+        // axios.post('http://localhost:4000/api/login', credenciales)
 
-                // setEmpleado(data);
+        //     .then(({ data }) => {
 
-                const currentDate = new Date();
+        //         // setEmpleado(data);
 
-                const day = currentDate.getDate().toString().padStart(2, '0');
-                const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
-                const year = currentDate.getFullYear().toString();
+        //         const currentDate = new Date();
 
-                const fechaActual = `${day}-${month}-${year}`;
+        //         const day = currentDate.getDate().toString().padStart(2, '0');
+        //         const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+        //         const year = currentDate.getFullYear().toString();
 
-                console.log(data.idEmpleado);
-                console.log(fechaActual);
+        //         const fechaActual = `${day}-${month}-${year}`;
 
-                const informacion = {
+        //         const informacion = {
 
-                    idEmpleado: data.idEmpleado,
-                    fecha: fechaActual
+        //             idEmpleado: data.idEmpleado,
+        //             fecha: fechaActual
+
+        //         }
+
+        //         const getCobrados = () => {
+
+        //             const query = new URLSearchParams(informacion).toString();
+        //             const url = `http://localhost:5176/api/cobradosDia?${query}`;
+
+        //             fetch(url)
+        //                 .then(res => res.json())
+        //                 .then(res => setPagosDelDia(res));
+
+        //         }
+
+        //         getCobrados();
+
+        //         console.log(data);
+        //         setEmpleado(data);
+
+
+        //         comprobarPagos();
+
+        //     })
+
+        //     .catch(({ response }) => {
+
+        //         // Este error se debe a que toda la API debe estar funcionando
+        //         console.log("Error aquí");
+
+        //         console.log(response);
+
+        //    })
+
+        const requestInit = {
+
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(credenciales)
+
+        }
+
+        fetch('http://localhost:5176/api/login', requestInit)
+            .then(res => res.json())
+            .then(res => {
+
+                if (res.length > 0) {
+
+                    const currentDate = new Date();
+
+                    const day = currentDate.getDate().toString().padStart(2, '0');
+                    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+                    const year = currentDate.getFullYear().toString();
+
+                    const fechaActual = `${day}-${month}-${year}`;
+
+                    const informacion = {
+
+                        idEmpleado: res[0].idEmpleado,
+                        fecha: fechaActual
+
+                    }
+
+                    const getCobrados = () => {
+
+                        const query = new URLSearchParams(informacion).toString();
+                        const url = `http://localhost:5176/api/cobradosDia?${query}`;
+
+                        fetch(url)
+                            .then(res => res.json())
+                            .then(res => setPagosDelDia(res));
+
+                    }
+
+                    getCobrados();
+
+                    setEmpleado(res[0]);
+
+
+                } else {
+
+                    Swal("¡Error!", "No se ha encontrado a nadie con esos datos", "error");
 
                 }
 
-                const getCobrados = () => {
-
-                    const query = new URLSearchParams(informacion).toString();
-                    const url = `http://localhost:5176/api/cobradosDia?${query}`;
-
-                    fetch(url)
-                        .then(res => res.json())
-                        .then(res => setPagosDelDia(res));
-
-                }
-
-                getCobrados();
-
-                setEmpleado(data);
-
-                comprobarPagos();
-
-            })
-
-            .catch(({ response }) => {
-
-                console.log(response.data);
 
             })
 
@@ -88,9 +147,9 @@ function Login() {
 
             console.log("Aqui está pasando");
 
-            if (pagosDelDia.length > 0) {
+            if (pagosDelDia.length < 0) {
 
-                console.log(pagosDelDia)
+                console.log(pagosDelDia);
 
                 console.log("Si hay cobros realizados, entonces no se le permite ingresar de nuevo");
 
@@ -99,13 +158,14 @@ function Login() {
                 console.log(empleado);
 
                 setEmpleado({});
+
                 setCredenciales({ username: '', password: '' });
 
             } else {
 
                 console.log("No hay pagos realizados, entonces si se le permite ingresar");
 
-                setAcceso(true);   
+                setAcceso(true);
 
                 localStorage.setItem('Empleado', JSON.stringify(empleado));
 
@@ -137,7 +197,7 @@ function Login() {
 
                 <div className="m-10 p-5">
 
-                    <h1 className="text-blue-900 font-bold text-2xl text-center"><span className="text-3xl block text-center">CADOFI</span> SERIVICIOS INTEGRALES</h1>
+                    <h1 className="text-blue-900 font-bold text-2xl text-center"><span className="text-3xl block text-center">CADOFI</span> SERVICIOS INTEGRALES</h1>
                     <img src={img} alt="finanzas" className="w-96" />
 
                 </div>

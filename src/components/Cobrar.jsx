@@ -1,12 +1,16 @@
 import { useEffect, useState, useContext } from "react"
 import img from "../img/candado.png";
 import NavBar from "../components/NavBar"
-import swal from "sweetalert";
+import Swal from "sweetalert";
 import { AppContext } from "../context/AppContext";
+import jsPDF from "jspdf";
+import image from "../img/cadofi.jpeg"
+import 'jspdf-autotable';
+
 
 function Cobrar() {
 
-    const { listaClientes, cliente, empleado } = useContext(AppContext);
+    const { listaClientes, empleado, gestor, ubicacion, setAgregado } = useContext(AppContext);
 
     const [mostrar, setMostrar] = useState(false);
     const [seleccionado, setSeleccionado] = useState(false);
@@ -22,33 +26,31 @@ function Cobrar() {
 
     const [folio, setFolio] = useState(0);
 
+    // Se genera la fecha para el reporte del pago
     const currentDate = new Date();
-
     const day = currentDate.getDate().toString().padStart(2, '0');
     const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
     const year = currentDate.getFullYear().toString();
-    
     const fecha = `${day}-${month}-${year}`;
-
-
     const hora = `${new Date().getHours()} : ${new Date().getMinutes()}`
+
 
     const [idCredito, setIdCredito] = useState(0);
     const [montoDiario, setMontoDiario] = useState(0);
     const [saldoRestante, setSaldoRestante] = useState(0);
     const [montoTotal, setMontoTotal] = useState(0);
     const [nPago, setNpago] = useState(0);
-    const [infoSucursal, setInfoSucursal] = useState([]);
-    const [ubicacion, setUbicacion] = useState('');
-    const [gestor, setGestor] = useState('');
     const [habilitado, setHabilitado] = useState(true);
 
     const [infoCredito, setInfoCredito] = useState({});
     const [pagosRealizados, setPagosRealizados] = useState([]);
+    const [finiquitado, setFiniquitado] = useState([]);
 
     useEffect(() => {
 
-        if (Object.keys(cliente).length > 0) {
+        const cliente = JSON.parse(localStorage.getItem('COBRO'));
+
+        if (cliente) {
 
             setNombre(cliente.nombre);
             setFechaNacimiento(cliente.fechaNacimiento);
@@ -77,62 +79,37 @@ function Cobrar() {
 
     }, []);
 
-
-    useEffect(() => {
-
-        setGestor(empleado.nombre);
-
-        const getSucursal = () => {
-
-            fetch(`http://localhost:5176/api/sucursal/${empleado.nuevoIdSucursal}`)
-                .then(res => res.json())
-                .then(res => setInfoSucursal(res));
-
-        }
-
-        getSucursal();
-
-    }, []);
-
-    useEffect(() => {
-
-        if (infoSucursal.length > 0) {
-    
-            setUbicacion(infoSucursal[0].ubicacion);
-
-        }
-
-    }, [infoSucursal])
-
-
     const realizarCobro = e => {
 
-        const clienteCobro = listaClientes.find(c => c.curp === e.target.value);
+        if (e.target.value !== "") {
 
-        console.log(clienteCobro);
+            const clienteCobro = listaClientes.find(c => c.curp === e.target.value);
 
-        setNombre(clienteCobro.nombre);
-        setFechaNacimiento(clienteCobro.fechaNacimiento);
-        setTelefono(clienteCobro.telefono);
-        setCorreo(clienteCobro.email);
-        setCurp(clienteCobro.curp);
-        setRfc(clienteCobro.rfc);
-        setEstadoCivil(clienteCobro.estadoCivil);
-        setDireccion(clienteCobro.direccion);
+            console.log(clienteCobro);
 
-        const getCredito = () => {
+            setNombre(clienteCobro.nombre);
+            setFechaNacimiento(clienteCobro.fechaNacimiento);
+            setTelefono(clienteCobro.telefono);
+            setCorreo(clienteCobro.email);
+            setCurp(clienteCobro.curp);
+            setRfc(clienteCobro.rfc);
+            setEstadoCivil(clienteCobro.estadoCivil);
+            setDireccion(clienteCobro.direccion);
 
-            fetch(`http://localhost:5176/api/credito/${clienteCobro.curp}`)
-                .then(res => res.json())
-                .then(res => setInfoCredito(res));
+            const getCredito = () => {
+
+                fetch(`http://localhost:5176/api/credito/${clienteCobro.curp}`)
+                    .then(res => res.json())
+                    .then(res => setInfoCredito(res));
+
+            }
+
+            getCredito();
+
+            setMostrar(true);
+            setSeleccionado(true);
 
         }
-
-        getCredito();
-
-        setMostrar(true);
-        setSeleccionado(true);
-        setGestor(empleado.nombre);
 
     }
 
@@ -140,14 +117,18 @@ function Cobrar() {
 
         if (mostrar) {
 
-            setFolio(Math.floor(Math.random() * 9000) + 1000);
-            setMontoDiario(infoCredito[0].pagos);
-            setIdCredito(infoCredito[0].idCredito);
-            setMontoTotal(infoCredito[0].totalCredito);
+            if (infoCredito.length > 0) {
+
+                setFolio(Math.floor(Math.random() * 9000) + 1000);
+                setMontoDiario(infoCredito[0].pagos);
+                setIdCredito(infoCredito[0].idCredito);
+                setMontoTotal(infoCredito[0].totalCredito);
+
+            }
 
         }
 
-    }, [infoCredito])
+    }, [infoCredito, mostrar]);
 
 
     useEffect(() => {
@@ -163,54 +144,177 @@ function Cobrar() {
 
         getInfoCredito();
 
-    }, [idCredito]);
+    }, [idCredito, folio]);
 
 
     useEffect(() => {
 
         let suma = 0;
 
+        console.log(pagosRealizados.length);
+
         pagosRealizados.map(pago => {
 
             suma += pago.monto;
 
-        })
+        });
 
-        setNpago(pagosRealizados.length + 1)
+        if (seleccionado) {
+
+            setNpago(pagosRealizados.length + 1);
+
+        } else {
+
+            setNpago(pagosRealizados.length);
+
+        }
+
         setSaldoRestante(montoTotal - suma);
         setMonto(montoDiario);
+
+
 
     }, [pagosRealizados]);
 
 
-    const registrarPago = () => {
+    const finiquitarCredito = () => {
 
-        const pago = {
+        const informacion = {
 
-            idCredito,
-            fecha,
-            hora,
-            monto,
+            estatus: "finiquitado",
+            curp
 
         }
 
-        const enviarPago = {
+        const requestInit = {
 
-            method: 'POST',
+            method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(pago)
+            body: JSON.stringify(informacion)
 
         }
 
-        fetch('http://localhost:5176/api/pago', enviarPago)
-            .then(res => res.json())
+        fetch('http://localhost:5176/api/finiquitarCliente', requestInit)
+            .then(res => res.text())
             .then(res => console.log(res));
 
-        swal("¡Éxito!", "El pago se ha registrado correctamente", "success");
-        setHabilitado(true);
+
+        swal("¡Éxito!", "El cliente ha cumplido con todos sus pagos", "success");
+
 
     }
 
+    const generarReporte = () => {
+
+        swal("¡Éxito!", "El pago se ha registrado correctamente", "success");
+
+        const doc = new jsPDF();
+
+        const marginLeft = 70;
+        const marginTop = 20;
+        const lineHeight = 10;
+        let currentY = marginTop;
+
+        doc.setFontSize(20);
+        doc.text('Reporte de Pago', 70, 15);
+
+        const imageWidth = 50;
+        const imageHeight = 50;
+
+        // Agregar la imagen en las coordenadas (x, y)
+        doc.addImage(image, 'JPEG', marginLeft, currentY, imageWidth, imageHeight);
+
+        // Ajustar la posición vertical (coordenada Y) después de agregar la imagen
+        currentY += imageHeight + 10;
+
+        doc.setFontSize(14);
+        doc.setTextColor(255, 0, 0);
+        doc.text('Gracias por su pago.', 20, 110);
+
+        const data1 = [
+            ['Cliente', 'Monto', 'Fecha', 'Referencia de Pago', 'Hora de pago', 'Sucursal', 'No. Pago'],
+            [nombre, "$" + monto, fecha, folio, hora, ubicacion, nPago]
+        ];
+
+        const marginLeftt = 20;
+        const marginTopp = 70;
+
+        doc.autoTable({
+
+            head: [data1[0]], // Encabezados de la tabla (primera fila)
+            body: data1.slice(1), // Cuerpo de la tabla (resto de filas)
+            startY: marginTopp, // Posición vertical para comenzar la tabla
+            margin: { left: marginLeftt }, // Margen izquierdo de la tabla
+            showHead: 'firstPage', // Mostrar encabezados en la primera página
+
+        });
+
+        doc.save('reporte.pdf');
+
+        localStorage.removeItem('COBRO');
+
+        setSeleccionado(false);
+        setSaldoRestante(0);
+        setFolio(0);
+        setHabilitado(true);
+        setMonto(0);
+    }
+
+
+    const registrarPago = () => {
+
+        if (seleccionado) {
+
+            const pago = {
+
+                idCredito,
+                fecha,
+                hora,
+                monto,
+                saldoRestante
+
+            }
+
+            const enviarPago = {
+
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(pago)
+
+            }
+
+            fetch('http://localhost:5176/api/pago', enviarPago)
+                .then(res => res.text())
+                .then(res => {
+
+                    if (res == 'CORRECTO') {
+
+                        generarReporte();
+
+
+                    } else if (res == 'FINIQUITADO') {
+
+                        generarReporte();
+                        finiquitarCredito();
+
+
+                    } else {
+
+
+                        Swal("¡Error!", "El monto ingresado es menor al monto diario permitido.", "error");
+
+                    }
+
+                });
+
+            setAgregado(true);
+
+        } else {
+
+            Swal("¡Error!", "Primero debes seleccionar un cliente", "error");
+        }
+
+    }
 
     return (<div className="flex flex-col min-h-screen bg-blue-950">
 
@@ -224,16 +328,19 @@ function Cobrar() {
 
                 <div className="grid grid-cols-1 lg:grid-cols-2">
 
-                    <div className="bg-slate-200 mx-20 my-5 border-2 border-gray-400 shadow-md">
+                    <div className="lg:bg-slate-100 lg:mx-20 my-5 border-2 border-gray-400 shadow-md mx-10">
 
                         <h1 className="text-blue-900 text-3xl font-semibold p-10">Información del cliente</h1>
 
                         <select
                             name="clientes"
                             id="clientes"
-                            className="p-5 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none
+                            className="px-8 py-3 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none
                             bg-blue-900 text-white font-bold text-center border-4 border-white"
+
                         >
+
+                            <option value="">Escoge un cliente</option>
 
                             {listaClientes.map(opcion => (
 
@@ -283,7 +390,7 @@ function Cobrar() {
 
                     </div>
 
-                    <div className="bg-slate-200 m-10 mx-20 my-5 border-2 border-gray-400 shadow-md">
+                    <div className="lg:bg-slate-100 lg:mx-20 lg:my-5 border-2 border-gray-400 shadow-md mx-10">
 
                         <div className="flex justify-center p-5">
 
@@ -294,13 +401,39 @@ function Cobrar() {
 
                         <div className="text-xl">
 
-                            <p className="p-5 font-bold text-blue-900">Folio de pago: <span className="text-gray-500">{folio}</span></p>
-                            <p className="p-5 font-bold text-blue-900">Fecha de pago: <span className="text-gray-500">{fecha}</span></p>
-                            <p className="p-5 font-bold text-blue-900">Hora de pago: <span className="text-gray-500">{hora}</span></p>
-                            <p className="p-5 font-bold text-blue-900">Sucursal: <span className="text-gray-500">{ubicacion}</span></p>
-                            <p className="p-5 font-bold text-blue-900">Gestor de venta: <span className="text-gray-500">{gestor}</span></p>
-                            <p className="p-5 font-bold text-blue-900">No. de pago: <span className="text-gray-500">{nPago}</span></p>
-                            <p className="p-5 font-bold text-blue-900">Saldo restante:<span className="text-gray-500"> ${saldoRestante}</span></p>
+                            {seleccionado ?
+
+                                <div>
+
+                                    <p className="p-5 font-bold text-blue-900">Folio de pago: <span className="text-gray-500">{folio}</span></p>
+                                    <p className="p-5 font-bold text-blue-900">Fecha de pago: <span className="text-gray-500">{fecha}</span></p>
+                                    <p className="p-5 font-bold text-blue-900">Hora de pago: <span className="text-gray-500">{hora}</span></p>
+                                    <p className="p-5 font-bold text-blue-900">Sucursal: <span className="text-gray-500">{ubicacion}</span></p>
+                                    <p className="p-5 font-bold text-blue-900">Gestor de venta: <span className="text-gray-500">{gestor}</span></p>
+                                    <p className="p-5 font-bold text-blue-900">No. de pago: <span className="text-gray-500">{nPago}</span></p>
+                                    <p className="p-5 font-bold text-blue-900">Saldo restante:<span className="text-gray-500"> ${saldoRestante}</span></p>
+
+
+
+                                </div>
+
+                                :
+
+                                <div>
+
+                                    <p className="p-5 font-bold text-blue-900">Folio de pago: <span className="text-gray-500">{folio}</span></p>
+                                    <p className="p-5 font-bold text-blue-900">Fecha de pago: <span className="text-gray-500">{fecha}</span></p>
+                                    <p className="p-5 font-bold text-blue-900">Hora de pago: <span className="text-gray-500">{hora}</span></p>
+                                    <p className="p-5 font-bold text-blue-900">Sucursal: <span className="text-gray-500">{ubicacion}</span></p>
+                                    <p className="p-5 font-bold text-blue-900">Gestor de venta: <span className="text-gray-500">{gestor}</span></p>
+                                    <p className="p-5 font-bold text-blue-900">No. de pago: <span className="text-gray-500">0</span></p>
+                                    <p className="p-5 font-bold text-blue-900">Saldo restante:<span className="text-gray-500"> $ </span></p>
+
+
+
+                                </div>
+
+                            }
 
                         </div>
 
@@ -315,7 +448,8 @@ function Cobrar() {
                             </button>
 
                             <button
-                                className="bg-blue-900 text-white font-bold rounded-md pt-2 pb-2 px-2 mx-5"
+
+                                className="bg-blue-900 text-white font-bold rounded-md lg:pt-2 lg:pb-2 lg:px-2 lg:mx-5 lg:mt-0 mt-5 pt-2 pb-2 mx-5 px-4"
                                 onClick={e => { setHabilitado(false) }}
                             >
 
@@ -341,7 +475,7 @@ function Cobrar() {
 
                         <div className="p-5">
 
-                            <button className="bg-blue-900 text-white font-bold px-28 py-2" onClick={registrarPago}>Confirmar</button>
+                            <button className="bg-blue-900 text-white font-bold lg:px-28 py-2 px-14" onClick={registrarPago}>Confirmar</button>
 
                         </div>
 
