@@ -6,7 +6,7 @@ import { AppContext } from "../context/AppContext"
 
 function FormularioGestores() {
 
-      const {empleado} = useContext(AppContext);
+      const {empleado, setAceptado} = useContext(AppContext);
 
       const [mensajeError, setMensajeError] = useState('');
       const [mensajeError2, setMensajeError2] = useState('');
@@ -20,7 +20,7 @@ function FormularioGestores() {
       const [codigoPostal, setCodigoPostal] = useState('');
       const [email, setEmail] = useState('');
       const [telefono, setTelefono] = useState('');
-      const [idSucursal, setIdSucursal] = useState(0);
+      const [idSucursal, setIdSucursal] = useState(empleado.IdSucursal);
       const [usuario, setUsuario] = useState('');
       const [contrasena, setContrasena] = useState('');
 
@@ -28,6 +28,8 @@ function FormularioGestores() {
       const [idEmpleado, setIdEmpleado] = useState('');
 
       useEffect(() => {
+
+            setIdSucursal(empleado.IdSucursal);
 
             const gestor = localStorage.getItem('gestorEditar');
 
@@ -52,6 +54,8 @@ function FormularioGestores() {
 
       }, [])
 
+
+      console.log(idSucursal)
 
       const validarFormulario = e => {
 
@@ -112,7 +116,7 @@ function FormularioGestores() {
 
                         const gestor = {
 
-                              idSucursal : empleado.idEmpleado,
+                              idSucursal,
                               nombre,
                               apellidoPaterno,
                               apellidoMaterno,
@@ -143,6 +147,7 @@ function FormularioGestores() {
 
                         Swal("¡Éxito!", "El gestor se ha agregado satisfactoriamente", "success");
                         vaciarCampos();
+                        setAceptado(true);
                   }
 
             }

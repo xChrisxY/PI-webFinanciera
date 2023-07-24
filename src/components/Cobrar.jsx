@@ -7,7 +7,6 @@ import jsPDF from "jspdf";
 import image from "../img/cadofi.jpeg"
 import 'jspdf-autotable';
 
-
 function Cobrar() {
 
     const { listaClientes, empleado, gestor, ubicacion, setAgregado } = useContext(AppContext);
@@ -117,6 +116,8 @@ function Cobrar() {
 
         if (mostrar) {
 
+            console.log(infoCredito)
+
             if (infoCredito.length > 0) {
 
                 setFolio(Math.floor(Math.random() * 9000) + 1000);
@@ -152,6 +153,7 @@ function Cobrar() {
         let suma = 0;
 
         console.log(pagosRealizados.length);
+        console.log(montoTotal)
 
         pagosRealizados.map(pago => {
 
@@ -175,6 +177,8 @@ function Cobrar() {
 
 
     }, [pagosRealizados]);
+
+
 
 
     const finiquitarCredito = () => {

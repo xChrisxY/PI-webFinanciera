@@ -49,7 +49,7 @@ function Formulario() {
     const [tarjetaCredito, setTarjetaCredito] = useState('');
     const [tarjetaDebito, setTarjetaDebito] = useState('');
     const [cuentaBancaria, setCuentaBancaria] = useState('');
-    const [TotalCredito, setTotalCredito] = useState('');
+    const [TotalCredito, setTotalCredito] = useState(25000);
     const [plan, setPlan] = useState('');
     const [pagos, setPagos] = useState(0);
     const [estatus, setEstatus] = useState('pendiente');

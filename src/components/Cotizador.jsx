@@ -5,7 +5,7 @@ import Button from "./Button";
 function Cotizador({ setPlan , setTotalCredito, pagos ,setPagos ,disabled}) {
 
     const [cantidad, setCantidad] = useState(25000);
-    const [total, setTotal] = useState(0);
+    const [total, setTotal] = useState(25000);
     const [cantidadPagos, setCantidadPagos] = useState(0);
     const [plazo, setPlazo] = useState('Diario');
 

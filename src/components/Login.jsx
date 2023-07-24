@@ -5,7 +5,6 @@ import { Navigate } from "react-router-dom"
 import { AppContext } from "../context/AppContext"
 import Swal from "sweetalert";
 
-
 function Login() {
 
     const { acceso, setAcceso } = useContext(AppContext);
@@ -30,59 +29,6 @@ function Login() {
     const onSubmit = e => {
 
         e.preventDefault();
-
-        console.log(credenciales);
-
-        // axios.post('http://localhost:4000/api/login', credenciales)
-
-        //     .then(({ data }) => {
-
-        //         // setEmpleado(data);
-
-        //         const currentDate = new Date();
-
-        //         const day = currentDate.getDate().toString().padStart(2, '0');
-        //         const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
-        //         const year = currentDate.getFullYear().toString();
-
-        //         const fechaActual = `${day}-${month}-${year}`;
-
-        //         const informacion = {
-
-        //             idEmpleado: data.idEmpleado,
-        //             fecha: fechaActual
-
-        //         }
-
-        //         const getCobrados = () => {
-
-        //             const query = new URLSearchParams(informacion).toString();
-        //             const url = `http://localhost:5176/api/cobradosDia?${query}`;
-
-        //             fetch(url)
-        //                 .then(res => res.json())
-        //                 .then(res => setPagosDelDia(res));
-
-        //         }
-
-        //         getCobrados();
-
-        //         console.log(data);
-        //         setEmpleado(data);
-
-
-        //         comprobarPagos();
-
-        //     })
-
-        //     .catch(({ response }) => {
-
-        //         // Este error se debe a que toda la API debe estar funcionando
-        //         console.log("Error aquí");
-
-        //         console.log(response);
-
-        //    })
 
         const requestInit = {
 
@@ -135,7 +81,6 @@ function Login() {
 
                 }
 
-
             })
 
     }
@@ -147,7 +92,7 @@ function Login() {
 
             console.log("Aqui está pasando");
 
-            if (pagosDelDia.length < 0) {
+            if (pagosDelDia.length > 0) {
 
                 console.log(pagosDelDia);
 
@@ -174,9 +119,6 @@ function Login() {
                 setEmpleado({});
 
             }
-
-            console.log(pagosDelDia);
-
 
         }
 

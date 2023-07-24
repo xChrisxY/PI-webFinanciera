@@ -58,6 +58,9 @@ export function AppContextProvider(props) {
 
       useEffect(() => {
             // posible validación para obtener un dato u otro
+
+            setAceptado(false);
+
             if (empleado.puesto === 'Gerente') {
 
                   const getGestores = () => {
