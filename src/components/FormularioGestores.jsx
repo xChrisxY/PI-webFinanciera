@@ -54,9 +54,6 @@ function FormularioGestores() {
 
       }, [])
 
-
-      console.log(idSucursal)
-
       const validarFormulario = e => {
 
             e.preventDefault();
@@ -103,6 +100,7 @@ function FormularioGestores() {
 
                         Swal("¡Éxito!", "La información del empleado se ha actualizado correctamente", "success");
                         vaciarCampos();
+                        setAceptado(true);
 
                   }
 

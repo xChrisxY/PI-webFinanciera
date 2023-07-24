@@ -110,7 +110,7 @@ function Historial() {
 
           <div className="flex justify-end">
 
-            <h1 className="text-xl font-bold text-gray-400 lg:pt-3 lg:px-3">Selecciona a un cliente</h1>
+            <h1 className="font-bold text-gray-400 pt-2 text-sm lg:text-2xl">Selecciona a un cliente</h1>
 
             <select
               name="clientes"
@@ -120,6 +120,7 @@ function Historial() {
             >
 
               <option value="">Escoge un cliente</option>
+              
               {listaClientes.map(opcion => (
 
                 <option key={opcion.curp} value={opcion.curp} onClick={llenarDatos}>
@@ -136,23 +137,23 @@ function Historial() {
 
           <div className="lg:grid lg:grid-cols-2 px-5 m-5 grid-cols-1">
 
-            <div className="py-5 px-5 font-bold text-blue-900 text-xl">
+            <div className="py-5 px-5 font-bold text-blue-900">
 
               {mostrar
                 ?
                 <div>
-                  <p className="py-4">Cliente : <span className="text-gray-500">{nombre}</span></p>
-                  <p className="py-4">Curp : <span className="text-gray-500">{curp}</span></p>
-                  <p className="py-4">Teléfono : <span className="text-gray-500">{telefono}</span></p>
-                  <p className="py-4">Dirección: <span className="text-gray-500">{calle}</span></p>
+                  <p className="py-4 text-sm lg:text-xl">Cliente : <span className="text-gray-500">{nombre}</span></p>
+                  <p className="py-4 text-sm lg:text-xl">Curp : <span className="text-gray-500">{curp}</span></p>
+                  <p className="py-4 text-sm lg:text-xl">Teléfono : <span className="text-gray-500">{telefono}</span></p>
+                  <p className="py-4 text-sm lg:text-xl">Dirección: <span className="text-gray-500">{calle}</span></p>
                 </div>
                 :
 
                 <div>
-                  <p className="py-4">Cliente : <span className="text-gray-500">Nombre del cliente</span></p>
-                  <p className="py-4">Curp : <span className="text-gray-500">OEAF771012HMCRGR09</span></p>
-                  <p className="py-4">Teléfono : <span className="text-gray-500">Número teléfonico</span></p>
-                  <p className="py-4">Dirección: <span className="text-gray-500">Direccion</span></p>
+                  <p className="py-4 text-sm lg:text-xl">Cliente : <span className="text-gray-500">Nombre del cliente</span></p>
+                  <p className="py-4 text-sm lg:text-xl">Curp : <span className="text-gray-500">OEAF771012HMCRGR09</span></p>
+                  <p className="py-4 text-sm lg:text-xl">Teléfono : <span className="text-gray-500">Número teléfonico</span></p>
+                  <p className="py-4 text-sm lg:text-xl">Dirección: <span className="text-gray-500">Direccion</span></p>
                 </div>
               }
 
@@ -166,20 +167,20 @@ function Historial() {
 
                 <div>
 
-                  <p className="py-4">No. de Pagos: <span className="text-gray-500">{nPago}</span></p>
-                  <p className="py-4">Fecha de Inicio:  <span className="text-gray-500">{fechaInicio}</span></p>
-                  <p className="py-4">Fecha de Termino: <span className="text-gray-500">{fechaTermino}</span></p>
-                  <p className="py-4">Saldo restante: <span className="text-gray-500">${saldoRestante}</span></p>
+                  <p className="py-4 text-sm lg:text-xl">No. de Pagos: <span className="text-gray-500">{nPago}</span></p>
+                  <p className="py-4 text-sm lg:text-xl">Fecha de Inicio:  <span className="text-gray-500">{fechaInicio}</span></p>
+                  <p className="py-4 text-sm lg:text-xl">Fecha de Termino: <span className="text-gray-500">{fechaTermino}</span></p>
+                  <p className="py-4 text-sm lg:text-xl">Saldo restante: <span className="text-gray-500">${saldoRestante}</span></p>
                 </div>
 
                 :
 
                 <div>
 
-                  <p className="py-4">No. de Pagos: <span className="text-gray-500">Número de pagos</span></p>
-                  <p className="py-4">Fecha de Inicio:  <span className="text-gray-500">Fecha de inicio</span></p>
-                  <p className="py-4">Fecha de Termino: <span className="text-gray-500">Fecha de termino</span></p>
-                  <p className="py-4">Saldo restante: <span className="text-gray-500">$</span></p>
+                  <p className="py-4 text-sm lg:text-xl">No. de Pagos: <span className="text-gray-500">Número de pagos</span></p>
+                  <p className="py-4 text-sm lg:text-xl">Fecha de Inicio:  <span className="text-gray-500">Fecha de inicio</span></p>
+                  <p className="py-4 text-sm lg:text-xl">Fecha de Termino: <span className="text-gray-500">Fecha de termino</span></p>
+                  <p className="py-4 text-sm lg:text-xl">Saldo restante: <span className="text-gray-500">$</span></p>
 
                 </div>
               }
@@ -199,10 +200,10 @@ function Historial() {
 
                   <tr className="border-b border-white bg-slate-300">
 
-                    <th className="lg:p-3">No. Pago</th>
-                    <th className="lg:p-3">Fecha</th>
-                    <th className="lg:p-3">Hora</th>
-                    <th className="lg:p-3">Monto</th>
+                    <th className="lg:p-3 lg:text-lg p-2 text-sm">No. Pago</th>
+                    <th className="lg:p-3 lg:text-lg p-2 text-sm">Fecha</th>
+                    <th className="lg:p-3 lg:text-lg p-2 text-sm">Hora</th>
+                    <th className="lg:p-3 lg:text-lg p-2 text-sm">Monto</th>
 
                   </tr>
 

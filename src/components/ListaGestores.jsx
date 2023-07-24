@@ -20,15 +20,40 @@ function ListaGestores() {
 
       const eliminarGestor = gestor => {
 
-            //Aquí nos hemos quedado, solo nos falta la opción para eliminar
-            //En este apartado comprobamos si el empleado tiene clientes por cobrar
-            setIdEmpleado(gestor.idEmpleado);
-
             const getClientes = () => {
 
                   fetch(`http://localhost:5176/api/gestorClientes/${gestor.idEmpleado}`)
                         .then(res => res.json())
-                        .then(res => setClientes(res));
+                        .then(res => {
+
+                              if (res.length > 0) {
+
+                                    Swal("¡Error!", "El gestor tiene aún pendientes por terminar, no se puede eliminar del sistema", "error");
+
+
+                              } else {
+
+                                    const requestInit = {
+
+                                          method: 'DELETE'
+                                    }
+
+
+                                    fetch(`http://localhost:5176/api/eliminarGestor/${gestor.idEmpleado}`, requestInit)
+                                          .then(res => res.text())
+                                          .then(res => {
+                                                setAceptado(true);
+                                                console.log(res);
+
+                                          });
+
+
+                                    Swal("¡Éxito!", "La información del empleado se ha eliminado correctamente", "success");
+
+                              }
+
+
+                        });
 
             }
 
@@ -36,38 +61,6 @@ function ListaGestores() {
 
       }
 
-      useEffect(() => {
-
-            if (idEmpleado && clientes.length > 0) {
-
-                  if (clientes.length > 0) {
-
-                        Swal("¡Error!", "El gestor tiene aún pendientes por terminar, no se puede eliminar del sistema", "error");
-
-                  } else if (idEmpleado) {
-
-                        const requestInit = {
-
-                              method: 'DELETE'
-                        }
-
-
-                        fetch(`http://localhost:5176/api/eliminarGestor/${idEmpleado}`, requestInit)
-                              .then(res => res.text())
-                              .then(res => {
-                                    setAceptado(true);
-                                    console.log(res);
-
-                              });
-
-
-                        Swal("¡Éxito!", "La información del empleado se ha eliminado correctamente", "success");
-
-                  }
-
-            }
-
-      }, [clientes, idEmpleado]);
 
       if (editar) {
 

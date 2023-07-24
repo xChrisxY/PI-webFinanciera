@@ -91,10 +91,14 @@ function Formulario() {
         if (informacionCliente.length > 0) {
 
             setNombre(informacionCliente[0].nombre);
+            setApellidoPaterno(informacionCliente[0].apellidoPaterno);
+            setApellidoMaterno(informacionCliente[0].apellidoMaterno);
             setFechaNacimiento(informacionCliente[0].fechaNacimiento);
             setTelefono(informacionCliente[0].telefono);
             setEmail(informacionCliente[0].email);
+            setColonia(informacionCliente[0].colonia);
             setCalle(informacionCliente[0].calle);
+            setNumeroCasa(informacionCliente[0].numeroCasa);
             setRfc(informacionCliente[0].rfc);
             setEstatus('activo');
             setCurp(informacionCliente[0].curp);
