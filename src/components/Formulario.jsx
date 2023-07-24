@@ -71,6 +71,8 @@ function Formulario() {
 
             setDisabled(true)
 
+            //http://localhost:5176/api/actualizar/${JSON.parse(id)}
+
             const getInfoCliente = () => {
 
                 fetch(`http://localhost:5176/api/actualizar/${JSON.parse(id)}`)

@@ -60,9 +60,19 @@ function Cobrar() {
             setEstadoCivil(cliente.estadoCivil);
             setDireccion(cliente.direccion);
 
+            // const getCredito = () => {
+
+            //     fetch(`http://localhost:5176/api/credito/${cliente.curp}`)
+            //         .then(res => res.json())
+            //         .then(res => setInfoCredito(res));
+
+            // }
+
+            // getCredito()
+
             const getCredito = () => {
 
-                fetch(`http://localhost:5176/api/credito/${cliente.curp}`)
+                fetch(`http://database-cadofi-pi.cb818gwnhvze.us-east-1.rds.amazonaws.com:5176/api/credito/${cliente.curp}`)
                     .then(res => res.json())
                     .then(res => setInfoCredito(res));
 
@@ -95,9 +105,19 @@ function Cobrar() {
             setEstadoCivil(clienteCobro.estadoCivil);
             setDireccion(clienteCobro.direccion);
 
+            // const getCredito = () => {
+
+            //     fetch(`http://localhost:5176/api/credito/${clienteCobro.curp}`)
+            //         .then(res => res.json())
+            //         .then(res => setInfoCredito(res));
+
+            // }
+
+            // getCredito();
+
             const getCredito = () => {
 
-                fetch(`http://localhost:5176/api/credito/${clienteCobro.curp}`)
+                fetch(`http://database-cadofi-pi.cb818gwnhvze.us-east-1.rds.amazonaws.com:5176/api/credito/${clienteCobro.curp}`)
                     .then(res => res.json())
                     .then(res => setInfoCredito(res));
 
@@ -144,6 +164,7 @@ function Cobrar() {
         }
 
         getInfoCredito();
+
 
     }, [idCredito, folio]);
 
@@ -286,6 +307,9 @@ function Cobrar() {
                 body: JSON.stringify(pago)
 
             }
+
+
+            //http://localhost:5176/api/pago
 
             fetch('http://localhost:5176/api/pago', enviarPago)
                 .then(res => res.text())

@@ -1,5 +1,4 @@
 import { useState, useContext, useEffect } from "react";
-import axios from "axios";
 import img from "../img/finanzas.jpg";
 import { Navigate } from "react-router-dom"
 import { AppContext } from "../context/AppContext"

@@ -50,6 +50,7 @@ function CobradosDia() {
 
 
                   const query = new URLSearchParams(informacion).toString();
+                  // const url = `http://localhost:5176/api/cobradosDia?${query}`;
                   const url = `http://localhost:5176/api/cobradosDia?${query}`;
 
                   fetch(url)
