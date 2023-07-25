@@ -5,7 +5,7 @@ import Swal from "sweetalert";
 import { AppContext } from "../context/AppContext";
 import jsPDF from "jspdf";
 import image from "../img/cadofi.jpeg"
-import 'jspdf-autotable';
+import 'jspdf-autotable';   
 
 function Cobrar() {
 
@@ -75,7 +75,7 @@ function Cobrar() {
                 //fetch(`http://database-cadofi-pi.cb818gwnhvze.us-east-1.rds.amazonaws.com:5176/api/credito/${cliente.curp}`)
                 fetch(`http://ec2-18-204-21-84.compute-1.amazonaws.com/credito/${cliente.curp}`)
                     .then(res => res.json())
-                    .then(res => setInfoCredito(res));
+                    .then(res => console.log(res));
 
             }
 
@@ -91,11 +91,13 @@ function Cobrar() {
 
     const realizarCobro = e => {
 
+        console.log("oofgfigj")
+
         if (e.target.value !== "") {
 
             const clienteCobro = listaClientes.find(c => c.curp === e.target.value);
 
-            console.log(clienteCobro);
+            
 
             setNombre(clienteCobro.nombre);
             setFechaNacimiento(clienteCobro.fechaNacimiento);
@@ -155,6 +157,8 @@ function Cobrar() {
 
     useEffect(() => {
 
+        console.log(idCredito)
+
         //Obtener información de los pagos para calcular el saldo restante
         const getInfoCredito = () => {
 
@@ -179,9 +183,12 @@ function Cobrar() {
 
         pagosRealizados.map(pago => {
 
-            suma += pago.monto;
+            // suma += pago.monto;
+            suma += parseInt(pago.monto);
 
         });
+
+        console.log(suma)
 
         if (seleccionado) {
 
@@ -284,6 +291,7 @@ function Cobrar() {
         setFolio(0);
         setHabilitado(true);
         setMonto(0);
+        setMontoDiario(0);
     }
 
 

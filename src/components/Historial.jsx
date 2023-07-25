@@ -84,7 +84,7 @@ function Historial() {
 
       pagosRealizados.map(pago => {
 
-        suma += pago.monto;
+        suma += parseInt(pago.monto);
 
       })
 

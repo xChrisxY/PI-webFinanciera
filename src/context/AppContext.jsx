@@ -37,22 +37,20 @@ export function AppContextProvider(props) {
 
             //agregamos el nombre del gestor nomas se carge la información de este.
             setGestor(empleado.nombre);
+            setAgregado(false);
 
-            if (acceso) {
+            console.log("si pasas por aqui")
 
-                  const getClientes = () => {
+            const getClientes = () => {
 
-                        fetch(`http://ec2-18-204-21-84.compute-1.amazonaws.com/cliente/${empleado.idEmpleado}`)
-                              .then(res => res.json())
-                              .then(res => setListaClientes(res));
-
-                  }
-
-                  getClientes();
+                  fetch(`http://ec2-18-204-21-84.compute-1.amazonaws.com/cliente/${empleado.idEmpleado}`)
+                        .then(res => res.json())
+                        .then(res => setListaClientes(res));
 
             }
 
-            setAgregado(false);
+            getClientes();
+
 
       }, [empleado, agregado]);
 
