@@ -34,7 +34,7 @@ function Historial() {
     //Obtenemos los datos del crédito
     const getCredito = () => {
 
-      fetch(`http://localhost:5176/api/credito/${cliente.curp}`)
+      fetch(`http://3.133.76.177:3000/api/credito/${cliente.curp}`)
         .then(res => res.json())
         .then(res => setInfoCredito(res));
 
@@ -64,7 +64,7 @@ function Historial() {
     //Obtenemos los datos de los pagos
     const getPagos = () => {
 
-      fetch(`http://localhost:5176/api/pago/${idCredito}`)
+      fetch(`http://3.133.76.177:3000/api/pago/${idCredito}`)
         .then(res => res.json())
         .then(res => setPagosRealizados(res));
 

@@ -89,7 +89,7 @@ function FormularioGestores() {
 
                         }
 
-                        fetch('http://localhost:5176/api/modificarEmpleado', requestInit)
+                        fetch('http://3.133.76.177:3000/api/modificarEmpleado', requestInit)
                               .then(res => res.text())
                               .then(res => console.log(res))
 
@@ -138,7 +138,7 @@ function FormularioGestores() {
 
                         }
 
-                        fetch('http://ec2-18-204-21-84.compute-1.amazonaws.com/empleado', requestInit)
+                        fetch('http://3.133.76.177:3000/api/empleado', requestInit)
                               .then(res => res.text())
                               .then(res => console.log(res));
 

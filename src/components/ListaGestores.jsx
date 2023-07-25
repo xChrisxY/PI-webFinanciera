@@ -22,7 +22,7 @@ function ListaGestores() {
 
             const getClientes = () => {
 
-                  fetch(`http://localhost:5176/api/gestorClientes/${gestor.idEmpleado}`)
+                  fetch(`http://3.133.76.177:3000/api/gestorClientes/${gestor.idEmpleado}`)
                         .then(res => res.json())
                         .then(res => {
 
@@ -39,7 +39,7 @@ function ListaGestores() {
                                     }
 
 
-                                    fetch(`http://localhost:5176/api/eliminarGestor/${gestor.idEmpleado}`, requestInit)
+                                    fetch(`http://3.133.76.177:3000/api/eliminarGestor/${gestor.idEmpleado}`, requestInit)
                                           .then(res => res.text())
                                           .then(res => {
                                                 setAceptado(true);

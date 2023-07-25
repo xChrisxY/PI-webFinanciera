@@ -67,7 +67,7 @@ function NavBar() {
 
         }
 
-        fetch('http://localhost:5176/api/modificarPassword', requestInit)
+        fetch('http://3.133.76.177:3000/api/modificarPassword', requestInit)
             .then(res => res.json())
             .then(res => {
 

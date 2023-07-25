@@ -75,7 +75,7 @@ function Formulario() {
 
             const getInfoCliente = () => {
 
-                fetch(`http://localhost:5176/api/actualizar/${JSON.parse(id)}`)
+                fetch(`http://3.133.76.177:3000/api/actualizar/${JSON.parse(id)}`)
                     .then(res => res.json())
                     .then(res => setInformacionCliente(res));
 
@@ -170,7 +170,7 @@ function Formulario() {
 
                 }
 
-                fetch('http://localhost:5176/api/modificarCliente', requestInit)
+                fetch('http://3.133.76.177:3000/api/modificarCliente', requestInit)
                     .then(res => res.text())
                     .then(res => console.log(res));
 
@@ -183,7 +183,7 @@ function Formulario() {
 
                 }
 
-                fetch('http://localhost:5176/api/modificarReferencia1', requestInit1)
+                fetch('http://3.133.76.177:3000/api/modificarReferencia1', requestInit1)
                     .then(res => res.text())
                     .then(res => console.log(res));
 
@@ -196,7 +196,7 @@ function Formulario() {
 
                 }
 
-                fetch('http://localhost:5176/api/modificarReferencia2', requestInit2)
+                fetch('http://3.133.76.177:3000/api/modificarReferencia2', requestInit2)
                     .then(res => res.text())
                     .then(res => console.log(res));
 
@@ -209,7 +209,7 @@ function Formulario() {
 
                 }
 
-                fetch('http://localhost:5176/api/modificarReferencia3', requestInit3)
+                fetch('http://3.133.76.177:3000/api/modificarReferencia3', requestInit3)
                     .then(res => res.text())
                     .then(res => console.log(res));
 
@@ -222,7 +222,7 @@ function Formulario() {
 
                 }
 
-                fetch('http://localhost:5176/api/modificarReferencia4', requestInit4)
+                fetch('http://3.133.76.177:3000/api/modificarReferencia4', requestInit4)
                     .then(res => res.text())
                     .then(res => console.log(res));
 
@@ -310,7 +310,7 @@ function Formulario() {
 
                 }
 
-                fetch('http://localhost:5176/api/', requestInit)
+                fetch('http://3.133.76.177:3000/api/', requestInit)
                     .then(res => res.text())
                     .then(res => console.log(res));
 
@@ -323,7 +323,7 @@ function Formulario() {
 
                 }
 
-                fetch('http://localhost:5176/api/referencia1', requestInit1)
+                fetch('http://3.133.76.177:3000/api/referencia1', requestInit1)
                     .then(res => res.text())
                     .then(res => console.log(res));
 
@@ -336,7 +336,7 @@ function Formulario() {
 
                 }
 
-                fetch('http://localhost:5176/api/referencia2', requestInit2)
+                fetch('http://3.133.76.177:3000/api/referencia2', requestInit2)
                     .then(res => res.text())
                     .then(res => console.log(res));
 
@@ -349,7 +349,7 @@ function Formulario() {
 
                 }
 
-                fetch('http://localhost:5176/api/referencia3', requestInit3)
+                fetch('http://3.133.76.177:3000/api/referencia3', requestInit3)
                     .then(res => res.text())
                     .then(res => console.log(res));
 
@@ -362,7 +362,7 @@ function Formulario() {
 
                 }
 
-                fetch('http://localhost:5176/api/referencia4', requestInit4)
+                fetch('http://3.133.76.177:3000/api/referencia4', requestInit4)
                     .then(res => res.text())
                     .then(res => console.log(res));
 
@@ -376,7 +376,7 @@ function Formulario() {
 
                 }
 
-                fetch('http://localhost:5176/api/credito', enviarCredito)
+                fetch('http://3.133.76.177:3000/api/credito', enviarCredito)
                     .then(res => res.text())
                     .then(res => console.log(res));
 

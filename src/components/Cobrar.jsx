@@ -73,9 +73,9 @@ function Cobrar() {
             const getCredito = () => {
 
                 //fetch(`http://database-cadofi-pi.cb818gwnhvze.us-east-1.rds.amazonaws.com:5176/api/credito/${cliente.curp}`)
-                fetch(`http://localhost:5176/api/credito/${cliente.curp}`)
+                fetch(`http://3.133.76.177:3000/api/credito/${cliente.curp}`)
                     .then(res => res.json())
-                    .then(res => console.log(res));
+                    .then(res => setInfoCredito(res));
 
             }
 
@@ -119,7 +119,7 @@ function Cobrar() {
 
             const getCredito = () => {
 
-                fetch(`http://localhost:5176/api/credito/${clienteCobro.curp}`)
+                fetch(`http://3.133.76.177:3000/api/credito/${clienteCobro.curp}`)
                     .then(res => res.json())
                     .then(res => setInfoCredito(res));
 
@@ -161,7 +161,7 @@ function Cobrar() {
         //Obtener información de los pagos para calcular el saldo restante
         const getInfoCredito = () => {
 
-            fetch(`http://localhost:5176/api/pago/${idCredito}`)
+            fetch(`http://3.133.76.177:3000/api/pago/${idCredito}`)
                 .then(res => res.json())
                 .then(res => setPagosRealizados(res));
 
@@ -226,7 +226,7 @@ function Cobrar() {
 
         }
 
-        fetch('http://localhost:5176/api/finiquitarCliente', requestInit)
+        fetch('http://3.133.76.177:3000/api/finiquitarCliente', requestInit)
             .then(res => res.text())
             .then(res => console.log(res));
 
@@ -319,7 +319,7 @@ function Cobrar() {
 
             //http://localhost:5176/api/pago
 
-            fetch('http://localhost:5176/api/pago', enviarPago)
+            fetch('http://3.133.76.177:3000/api/pago', enviarPago)
                 .then(res => res.text())
                 .then(res => {
 
@@ -521,7 +521,6 @@ function Cobrar() {
             </div>
 
         </div>
-
 
 
     </div>)

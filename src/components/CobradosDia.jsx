@@ -51,7 +51,7 @@ function CobradosDia() {
 
                   const query = new URLSearchParams(informacion).toString();
                   // const url = `http://localhost:5176/api/cobradosDia?${query}`;
-                  const url = `http://localhost:5176/api/cobradosDia?${query}`;
+                  const url = `http://3.133.76.177:3000/api/cobradosDia?${query}`;
 
                   fetch(url)
                         .then(res => res.json())
@@ -67,7 +67,7 @@ function CobradosDia() {
 
             const getSucursal = () => {
 
-                  fetch(`http://localhost:5176/api/sucursal/${empleado.IdSucursal}`)
+                  fetch(`http://3.133.76.177:3000/api/sucursal/${empleado.IdSucursal}`)
                         .then(res => res.json())
                         .then(res => setInfoSucursal(res));
 

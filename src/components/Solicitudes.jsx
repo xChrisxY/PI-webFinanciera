@@ -15,7 +15,7 @@ function Solicitudes() {
 
             const getSolicitudes = () => {
 
-                  fetch("http://localhost:5176/api/solicitud")
+                  fetch("http://3.133.76.177:3000/api/solicitud")
                         .then(res => res.json())
                         .then(res => setSolicitudes(res));
 
@@ -70,7 +70,7 @@ function Solicitudes() {
 
             }
 
-            fetch('http://localhost:5176/api/agregarCliente', modificacionEstatus)
+            fetch('http://3.133.76.177:3000/api/agregarCliente', modificacionEstatus)
                   .then(res => res.text())
                   .then(res => console.log(res));
 
@@ -110,7 +110,7 @@ function Solicitudes() {
 
             }
 
-            fetch('http://localhost:5176/api/iniciarCredito', modificacionFecha)
+            fetch('http://3.133.76.177:3000/api/iniciarCredito', modificacionFecha)
                   .then(res => res.text())
                   .then(res => console.log(res));
 
@@ -141,30 +141,30 @@ function Solicitudes() {
             }
             //Eliminamos primero los registros de la tabla clientes
 
-            fetch(`http://localhost:5176/eliminarCredito/${idCredito}`, requestInit)
+            fetch(`http://3.133.76.177:3000/eliminarCredito/${idCredito}`, requestInit)
                   .then(res => res.text())
                   .then(res => console.log(res))
 
-            fetch(`http://localhost:5176/eliminarCliente/${curp}`, requestInit)
-                  .then(res => res.text())
-                  .then(res => console.log(res))
-
-
-            fetch(`http://localhost:5176/eliminarReferencia1/${idReferencia}`, requestInit)
+            fetch(`http://3.133.76.177:3000/eliminarCliente/${curp}`, requestInit)
                   .then(res => res.text())
                   .then(res => console.log(res))
 
 
-            fetch(`http://localhost:5176/eliminarReferencia2/${idReferencia}`, requestInit)
-                  .then(res => res.text())
-                  .then(res => console.log(res))
-
-            fetch(`http://localhost:5176/eliminarReferencia3/${idReferencia}`, requestInit)
+            fetch(`http://3.133.76.177:3000/eliminarReferencia1/${idReferencia}`, requestInit)
                   .then(res => res.text())
                   .then(res => console.log(res))
 
 
-            fetch(`http://localhost:5176/eliminarReferencia4/${idReferencia}`, requestInit)
+            fetch(`http://3.133.76.177:3000/eliminarReferencia2/${idReferencia}`, requestInit)
+                  .then(res => res.text())
+                  .then(res => console.log(res))
+
+            fetch(`http://3.133.76.177:3000/eliminarReferencia3/${idReferencia}`, requestInit)
+                  .then(res => res.text())
+                  .then(res => console.log(res))
+
+
+            fetch(`http://3.133.76.177:3000/eliminarReferencia4/${idReferencia}`, requestInit)
                   .then(res => res.text())
                   .then(res => console.log(res))
 

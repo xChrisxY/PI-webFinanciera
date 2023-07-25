@@ -43,7 +43,7 @@ export function AppContextProvider(props) {
 
             const getClientes = () => {
 
-                  fetch(`http://localhost:5176/api/cliente/${empleado.idEmpleado}`)
+                  fetch(`http://3.133.76.177:3000/api/cliente/${empleado.idEmpleado}`)
                         .then(res => res.json())
                         .then(res => setListaClientes(res));
 
@@ -63,7 +63,7 @@ export function AppContextProvider(props) {
 
                   const getGestores = () => {
 
-                        fetch("http://localhost:5176/api/gestores/" + empleado.IdSucursal)
+                        fetch("http://3.133.76.177:3000/api/gestores/" + empleado.IdSucursal)
                               .then(res => res.json())
                               .then(res => setGestores(res));
                   }
@@ -79,7 +79,7 @@ export function AppContextProvider(props) {
 
             const getSucursal = () => {
 
-                  fetch(`http://localhost:5176/api/sucursal/${empleado.IdSucursal}`)
+                  fetch(`http://3.133.76.177:3000/api/sucursal/${empleado.IdSucursal}`)
                         .then(res => res.json())
                         .then(res => setInfoSucursal(res));
 
