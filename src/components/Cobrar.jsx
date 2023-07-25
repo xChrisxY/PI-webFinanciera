@@ -73,7 +73,7 @@ function Cobrar() {
             const getCredito = () => {
 
                 //fetch(`http://database-cadofi-pi.cb818gwnhvze.us-east-1.rds.amazonaws.com:5176/api/credito/${cliente.curp}`)
-                fetch(`http://ec2-18-204-21-84.compute-1.amazonaws.com/credito/${cliente.curp}`)
+                fetch(`http://localhost:5176/api/credito/${cliente.curp}`)
                     .then(res => res.json())
                     .then(res => console.log(res));
 
@@ -98,7 +98,6 @@ function Cobrar() {
             const clienteCobro = listaClientes.find(c => c.curp === e.target.value);
 
             
-
             setNombre(clienteCobro.nombre);
             setFechaNacimiento(clienteCobro.fechaNacimiento);
             setTelefono(clienteCobro.telefono);
@@ -120,7 +119,7 @@ function Cobrar() {
 
             const getCredito = () => {
 
-                fetch(`http://ec2-18-204-21-84.compute-1.amazonaws.com/credito/${clienteCobro.curp}`)
+                fetch(`http://localhost:5176/api/credito/${clienteCobro.curp}`)
                     .then(res => res.json())
                     .then(res => setInfoCredito(res));
 
@@ -133,7 +132,7 @@ function Cobrar() {
 
         }
 
-    }
+    }   
 
     useEffect(() => {
 
@@ -162,7 +161,7 @@ function Cobrar() {
         //Obtener información de los pagos para calcular el saldo restante
         const getInfoCredito = () => {
 
-            fetch(`http://ec2-18-204-21-84.compute-1.amazonaws.com/pago/${idCredito}`)
+            fetch(`http://localhost:5176/api/pago/${idCredito}`)
                 .then(res => res.json())
                 .then(res => setPagosRealizados(res));
 
@@ -227,7 +226,7 @@ function Cobrar() {
 
         }
 
-        fetch('http://ec2-18-204-21-84.compute-1.amazonaws.com/finiquitarCliente', requestInit)
+        fetch('http://localhost:5176/api/finiquitarCliente', requestInit)
             .then(res => res.text())
             .then(res => console.log(res));
 
@@ -320,7 +319,7 @@ function Cobrar() {
 
             //http://localhost:5176/api/pago
 
-            fetch('http://ec2-18-204-21-84.compute-1.amazonaws.com/pago', enviarPago)
+            fetch('http://localhost:5176/api/pago', enviarPago)
                 .then(res => res.text())
                 .then(res => {
 

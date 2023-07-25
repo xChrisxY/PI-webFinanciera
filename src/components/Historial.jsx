@@ -34,7 +34,7 @@ function Historial() {
     //Obtenemos los datos del crédito
     const getCredito = () => {
 
-      fetch(`http://ec2-18-204-21-84.compute-1.amazonaws.com/credito/${cliente.curp}`)
+      fetch(`http://localhost:5176/api/credito/${cliente.curp}`)
         .then(res => res.json())
         .then(res => setInfoCredito(res));
 
@@ -64,7 +64,7 @@ function Historial() {
     //Obtenemos los datos de los pagos
     const getPagos = () => {
 
-      fetch(`http://ec2-18-204-21-84.compute-1.amazonaws.com/pago/${idCredito}`)
+      fetch(`http://localhost:5176/api/pago/${idCredito}`)
         .then(res => res.json())
         .then(res => setPagosRealizados(res));
 

@@ -15,7 +15,7 @@ function Solicitudes() {
 
             const getSolicitudes = () => {
 
-                  fetch("http://ec2-18-204-21-84.compute-1.amazonaws.com/solicitud")
+                  fetch("http://localhost:5176/api/solicitud")
                         .then(res => res.json())
                         .then(res => setSolicitudes(res));
 
@@ -70,7 +70,7 @@ function Solicitudes() {
 
             }
 
-            fetch('http://ec2-18-204-21-84.compute-1.amazonaws.com/agregarCliente', modificacionEstatus)
+            fetch('http://localhost:5176/api/agregarCliente', modificacionEstatus)
                   .then(res => res.text())
                   .then(res => console.log(res));
 
@@ -110,7 +110,7 @@ function Solicitudes() {
 
             }
 
-            fetch('http://ec2-18-204-21-84.compute-1.amazonaws.com/iniciarCredito', modificacionFecha)
+            fetch('http://localhost:5176/api/iniciarCredito', modificacionFecha)
                   .then(res => res.text())
                   .then(res => console.log(res));
 
@@ -141,30 +141,30 @@ function Solicitudes() {
             }
             //Eliminamos primero los registros de la tabla clientes
 
-            fetch(`http://ec2-18-204-21-84.compute-1.amazonaws.com/eliminarCredito/${idCredito}`, requestInit)
+            fetch(`http://localhost:5176/eliminarCredito/${idCredito}`, requestInit)
                   .then(res => res.text())
                   .then(res => console.log(res))
 
-            fetch(`http://ec2-18-204-21-84.compute-1.amazonaws.com/eliminarCliente/${curp}`, requestInit)
-                  .then(res => res.text())
-                  .then(res => console.log(res))
-
-
-            fetch(`http://ec2-18-204-21-84.compute-1.amazonaws.com/eliminarReferencia1/${idReferencia}`, requestInit)
+            fetch(`http://localhost:5176/eliminarCliente/${curp}`, requestInit)
                   .then(res => res.text())
                   .then(res => console.log(res))
 
 
-            fetch(`http://ec2-18-204-21-84.compute-1.amazonaws.com/eliminarReferencia2/${idReferencia}`, requestInit)
-                  .then(res => res.text())
-                  .then(res => console.log(res))
-
-            fetch(`http://ec2-18-204-21-84.compute-1.amazonaws.com/eliminarReferencia3/${idReferencia}`, requestInit)
+            fetch(`http://localhost:5176/eliminarReferencia1/${idReferencia}`, requestInit)
                   .then(res => res.text())
                   .then(res => console.log(res))
 
 
-            fetch(`http://ec2-18-204-21-84.compute-1.amazonaws.com/eliminarReferencia4/${idReferencia}`, requestInit)
+            fetch(`http://localhost:5176/eliminarReferencia2/${idReferencia}`, requestInit)
+                  .then(res => res.text())
+                  .then(res => console.log(res))
+
+            fetch(`http://localhost:5176/eliminarReferencia3/${idReferencia}`, requestInit)
+                  .then(res => res.text())
+                  .then(res => console.log(res))
+
+
+            fetch(`http://localhost:5176/eliminarReferencia4/${idReferencia}`, requestInit)
                   .then(res => res.text())
                   .then(res => console.log(res))
 

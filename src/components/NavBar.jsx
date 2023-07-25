@@ -67,7 +67,7 @@ function NavBar() {
 
         }
 
-        fetch('http://ec2-18-204-21-84.compute-1.amazonaws.com/modificarPassword', requestInit)
+        fetch('http://localhost:5176/api/modificarPassword', requestInit)
             .then(res => res.json())
             .then(res => {
 
