@@ -42,7 +42,7 @@ export function AppContextProvider(props) {
 
                   const getClientes = () => {
 
-                        fetch(`http://ec2-100-26-195-9.compute-1.amazonaws.com/cliente/${empleado.idEmpleado}`)
+                        fetch(`http://ec2-18-204-21-84.compute-1.amazonaws.com/cliente/${empleado.idEmpleado}`)
                               .then(res => res.json())
                               .then(res => setListaClientes(res));
 
@@ -65,7 +65,7 @@ export function AppContextProvider(props) {
 
                   const getGestores = () => {
 
-                        fetch("http://ec2-100-26-195-9.compute-1.amazonaws.com/gestores/" + empleado.IdSucursal)
+                        fetch("http://ec2-18-204-21-84.compute-1.amazonaws.com/gestores/" + empleado.IdSucursal)
                               .then(res => res.json())
                               .then(res => setGestores(res));
                   }
@@ -81,7 +81,7 @@ export function AppContextProvider(props) {
 
             const getSucursal = () => {
 
-                  fetch(`http://ec2-100-26-195-9.compute-1.amazonaws.com/sucursal/${empleado.IdSucursal}`)
+                  fetch(`http://ec2-18-204-21-84.compute-1.amazonaws.com/sucursal/${empleado.IdSucursal}`)
                         .then(res => res.json())
                         .then(res => setInfoSucursal(res));
 

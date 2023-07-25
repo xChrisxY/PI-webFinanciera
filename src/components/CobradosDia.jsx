@@ -51,7 +51,7 @@ function CobradosDia() {
 
                   const query = new URLSearchParams(informacion).toString();
                   // const url = `http://localhost:5176/api/cobradosDia?${query}`;
-                  const url = `http://ec2-100-26-195-9.compute-1.amazonaws.com/cobradosDia?${query}`;
+                  const url = `http://ec2-18-204-21-84.compute-1.amazonaws.com/cobradosDia?${query}`;
 
                   fetch(url)
                         .then(res => res.json())
@@ -67,7 +67,7 @@ function CobradosDia() {
 
             const getSucursal = () => {
 
-                  fetch(`http://ec2-100-26-195-9.compute-1.amazonaws.com/sucursal/${empleado.IdSucursal}`)
+                  fetch(`http://ec2-18-204-21-84.compute-1.amazonaws.com/sucursal/${empleado.IdSucursal}`)
                         .then(res => res.json())
                         .then(res => setInfoSucursal(res));
 

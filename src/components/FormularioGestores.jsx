@@ -89,7 +89,7 @@ function FormularioGestores() {
 
                         }
 
-                        fetch('http://ec2-100-26-195-9.compute-1.amazonaws.com/modificarEmpleado', requestInit)
+                        fetch('http://ec2-18-204-21-84.compute-1.amazonaws.com/modificarEmpleado', requestInit)
                               .then(res => res.text())
                               .then(res => console.log(res))
 
@@ -138,7 +138,7 @@ function FormularioGestores() {
 
                         }
 
-                        fetch('http://ec2-100-26-195-9.compute-1.amazonaws.com/empleado', requestInit)
+                        fetch('http://ec2-18-204-21-84.compute-1.amazonaws.com/empleado', requestInit)
                               .then(res => res.text())
                               .then(res => console.log(res));
 

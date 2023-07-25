@@ -22,7 +22,7 @@ function ListaGestores() {
 
             const getClientes = () => {
 
-                  fetch(`http://ec2-100-26-195-9.compute-1.amazonaws.com/gestorClientes/${gestor.idEmpleado}`)
+                  fetch(`http://ec2-18-204-21-84.compute-1.amazonaws.com/gestorClientes/${gestor.idEmpleado}`)
                         .then(res => res.json())
                         .then(res => {
 
@@ -39,7 +39,7 @@ function ListaGestores() {
                                     }
 
 
-                                    fetch(`http://ec2-100-26-195-9.compute-1.amazonaws.com/eliminarGestor/${gestor.idEmpleado}`, requestInit)
+                                    fetch(`http://ec2-18-204-21-84.compute-1.amazonaws.com/eliminarGestor/${gestor.idEmpleado}`, requestInit)
                                           .then(res => res.text())
                                           .then(res => {
                                                 setAceptado(true);
