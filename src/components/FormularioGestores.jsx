@@ -89,7 +89,7 @@ function FormularioGestores() {
 
                         }
 
-                        fetch('http://localhost:5176/api/modificarEmpleado', requestInit)
+                        fetch('http://ec2-100-26-195-9.compute-1.amazonaws.com/modificarEmpleado', requestInit)
                               .then(res => res.text())
                               .then(res => console.log(res))
 
@@ -138,7 +138,7 @@ function FormularioGestores() {
 
                         }
 
-                        fetch('http://localhost:5176/api/empleado', requestInit)
+                        fetch('http://ec2-100-26-195-9.compute-1.amazonaws.com/empleado', requestInit)
                               .then(res => res.text())
                               .then(res => console.log(res));
 
@@ -207,9 +207,7 @@ function FormularioGestores() {
             } else {
 
                   setMensajeError('Por favor, ingresa solo números!');
-
             }
-
       }
 
       const handleChangeNumeroCasa = e => {
@@ -226,7 +224,6 @@ function FormularioGestores() {
                   setMensajeError3('Por favor, ingresa solo números!');
 
             }
-
       }
 
       return (

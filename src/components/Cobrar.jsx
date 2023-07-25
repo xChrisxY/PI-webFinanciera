@@ -72,7 +72,8 @@ function Cobrar() {
 
             const getCredito = () => {
 
-                fetch(`http://database-cadofi-pi.cb818gwnhvze.us-east-1.rds.amazonaws.com:5176/api/credito/${cliente.curp}`)
+                //fetch(`http://database-cadofi-pi.cb818gwnhvze.us-east-1.rds.amazonaws.com:5176/api/credito/${cliente.curp}`)
+                fetch(`http://ec2-100-26-195-9.compute-1.amazonaws.com/credito/${cliente.curp}`)
                     .then(res => res.json())
                     .then(res => setInfoCredito(res));
 
@@ -117,7 +118,7 @@ function Cobrar() {
 
             const getCredito = () => {
 
-                fetch(`http://database-cadofi-pi.cb818gwnhvze.us-east-1.rds.amazonaws.com:5176/api/credito/${clienteCobro.curp}`)
+                fetch(`http://ec2-100-26-195-9.compute-1.amazonaws.com/credito/${clienteCobro.curp}`)
                     .then(res => res.json())
                     .then(res => setInfoCredito(res));
 
@@ -157,7 +158,7 @@ function Cobrar() {
         //Obtener información de los pagos para calcular el saldo restante
         const getInfoCredito = () => {
 
-            fetch(`http://localhost:5176/api/pago/${idCredito}`)
+            fetch(`http://ec2-100-26-195-9.compute-1.amazonaws.com/pago/${idCredito}`)
                 .then(res => res.json())
                 .then(res => setPagosRealizados(res));
 
@@ -219,7 +220,7 @@ function Cobrar() {
 
         }
 
-        fetch('http://localhost:5176/api/finiquitarCliente', requestInit)
+        fetch('http://ec2-100-26-195-9.compute-1.amazonaws.com/finiquitarCliente', requestInit)
             .then(res => res.text())
             .then(res => console.log(res));
 
@@ -311,7 +312,7 @@ function Cobrar() {
 
             //http://localhost:5176/api/pago
 
-            fetch('http://localhost:5176/api/pago', enviarPago)
+            fetch('http://ec2-100-26-195-9.compute-1.amazonaws.com/pago', enviarPago)
                 .then(res => res.text())
                 .then(res => {
 

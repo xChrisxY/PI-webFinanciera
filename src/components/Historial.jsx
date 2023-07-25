@@ -1,7 +1,6 @@
 import { useEffect, useState, useContext } from "react"
 import { AppContext } from "../context/AppContext";
 import NavBar from "./NavBar"
-import image from "../img/lupa.png"
 
 function Historial() {
 
@@ -35,7 +34,7 @@ function Historial() {
     //Obtenemos los datos del crédito
     const getCredito = () => {
 
-      fetch(`http://localhost:5176/api/credito/${cliente.curp}`)
+      fetch(`http://ec2-100-26-195-9.compute-1.amazonaws.com/credito/${cliente.curp}`)
         .then(res => res.json())
         .then(res => setInfoCredito(res));
 
@@ -65,7 +64,7 @@ function Historial() {
     //Obtenemos los datos de los pagos
     const getPagos = () => {
 
-      fetch(`http://localhost:5176/api/pago/${idCredito}`)
+      fetch(`http://ec2-100-26-195-9.compute-1.amazonaws.com/pago/${idCredito}`)
         .then(res => res.json())
         .then(res => setPagosRealizados(res));
 
@@ -224,15 +223,11 @@ function Historial() {
 
                       </tr>
 
-
                     )
-
 
                   })}
 
-
                 </tbody>
-
 
               </table>
 
@@ -250,22 +245,17 @@ function Historial() {
               :
 
               ''
-
             }
 
           </div>
 
-
         </div>
 
-
       </div>
-
 
     </div>
 
   )
-
 }
 
 export default Historial

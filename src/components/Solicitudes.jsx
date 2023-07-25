@@ -1,6 +1,5 @@
-import { useState, useContext, useEffect } from "react"
+import { useState, useEffect } from "react"
 import NavBar from "./NavBar"
-import { AppContext } from "../context/AppContext";
 import Swal from 'sweetalert';
 import Modal from "./Modal";
 
@@ -16,7 +15,7 @@ function Solicitudes() {
 
             const getSolicitudes = () => {
 
-                  fetch("http://localhost:5176/api/solicitud")
+                  fetch("http://ec2-100-26-195-9.compute-1.amazonaws.com/solicitud")
                         .then(res => res.json())
                         .then(res => setSolicitudes(res));
 
@@ -71,7 +70,7 @@ function Solicitudes() {
 
             }
 
-            fetch('http://localhost:5176/api/agregarCliente', modificacionEstatus)
+            fetch('http://ec2-100-26-195-9.compute-1.amazonaws.com/agregarCliente', modificacionEstatus)
                   .then(res => res.text())
                   .then(res => console.log(res));
 
@@ -111,7 +110,7 @@ function Solicitudes() {
 
             }
 
-            fetch('http://localhost:5176/api/iniciarCredito', modificacionFecha)
+            fetch('http://ec2-100-26-195-9.compute-1.amazonaws.com/iniciarCredito', modificacionFecha)
                   .then(res => res.text())
                   .then(res => console.log(res));
 
@@ -142,30 +141,30 @@ function Solicitudes() {
             }
             //Eliminamos primero los registros de la tabla clientes
 
-            fetch(`http://localhost:5176/api/eliminarCredito/${idCredito}`, requestInit)
+            fetch(`http://ec2-100-26-195-9.compute-1.amazonaws.com/eliminarCredito/${idCredito}`, requestInit)
                   .then(res => res.text())
                   .then(res => console.log(res))
 
-            fetch(`http://localhost:5176/api/eliminarCliente/${curp}`, requestInit)
-                  .then(res => res.text())
-                  .then(res => console.log(res))
-
-
-            fetch(`http://localhost:5176/api/eliminarReferencia1/${idReferencia}`, requestInit)
+            fetch(`http://ec2-100-26-195-9.compute-1.amazonaws.com/eliminarCliente/${curp}`, requestInit)
                   .then(res => res.text())
                   .then(res => console.log(res))
 
 
-            fetch(`http://localhost:5176/api/eliminarReferencia2/${idReferencia}`, requestInit)
-                  .then(res => res.text())
-                  .then(res => console.log(res))
-
-            fetch(`http://localhost:5176/api/eliminarReferencia3/${idReferencia}`, requestInit)
+            fetch(`http://ec2-100-26-195-9.compute-1.amazonaws.com/eliminarReferencia1/${idReferencia}`, requestInit)
                   .then(res => res.text())
                   .then(res => console.log(res))
 
 
-            fetch(`http://localhost:5176/api/eliminarReferencia4/${idReferencia}`, requestInit)
+            fetch(`http://ec2-100-26-195-9.compute-1.amazonaws.com/eliminarReferencia2/${idReferencia}`, requestInit)
+                  .then(res => res.text())
+                  .then(res => console.log(res))
+
+            fetch(`http://ec2-100-26-195-9.compute-1.amazonaws.com/eliminarReferencia3/${idReferencia}`, requestInit)
+                  .then(res => res.text())
+                  .then(res => console.log(res))
+
+
+            fetch(`http://ec2-100-26-195-9.compute-1.amazonaws.com/eliminarReferencia4/${idReferencia}`, requestInit)
                   .then(res => res.text())
                   .then(res => console.log(res))
 

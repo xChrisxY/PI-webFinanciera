@@ -37,7 +37,7 @@ function Login() {
 
         }
 
-        fetch('http://localhost:5176/api/login', requestInit)
+        fetch('http://ec2-100-26-195-9.compute-1.amazonaws.com/login', requestInit)
             .then(res => res.json())
             .then(res => {
 
@@ -61,7 +61,7 @@ function Login() {
                     const getCobrados = () => {
 
                         const query = new URLSearchParams(informacion).toString();
-                        const url = `http://localhost:5176/api/cobradosDia?${query}`;
+                        const url = `http://ec2-100-26-195-9.compute-1.amazonaws.com/cobradosDia?${query}`;
 
                         fetch(url)
                             .then(res => res.json())
@@ -83,7 +83,6 @@ function Login() {
             })
 
     }
-
 
     useEffect(() => {
 

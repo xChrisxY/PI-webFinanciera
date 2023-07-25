@@ -71,10 +71,6 @@ const ejemplo = [
         cuentaBancaria : 'Banco Azteca'
     }  
 
-
-
 ];
-
-
 
 export default ejemplo;

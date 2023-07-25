@@ -7,7 +7,6 @@ function Alerta() {
       <h1 className="text-2xl">Lo sentimos, no hemos encontrado coincidencias</h1>
 
     </div>
-
   )
 }
 
