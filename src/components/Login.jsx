@@ -91,7 +91,7 @@ function Login() {
 
             console.log("Aqui está pasando");
 
-            if (pagosDelDia.length < 0) {
+            if (pagosDelDia.length > 0) {
 
                 console.log(pagosDelDia);
 
